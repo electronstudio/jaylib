@@ -12,5 +12,9 @@ java -jar ../javacpp.jar com/raylib/Raylib.java -d ../build
 cd ..
 mkdir -p build/com/raylib 
 mv gen/com/raylib/*.class build/com/raylib
-echo "STEP 3 - jar archive"
+echo "STEP 3 - compile helper classes"
+cd src
+javac -cp ../javacpp.jar:../build com/raylib/*.java -d ../build
+cd ..
+echo "STEP 4 - jar archive"
 jar cf jaylib.jar -C build .
