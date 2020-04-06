@@ -57,4 +57,19 @@ public class Jaylib extends Raylib{
             this(v.x(), v.y(), v.z());
         }
     }
+
+    public static class Vector2 extends Raylib.Vector2{
+        public Vector2(){
+            super();
+        }
+        public Vector2(float x, float y){
+            super();
+            x(x);
+            y(y);
+
+        }
+        public Vector2(Raylib.Vector3 v){
+            this(v.x(), v.y());
+        }
+    }
 }
