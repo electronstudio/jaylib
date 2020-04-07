@@ -5,7 +5,7 @@ import org.bytedeco.javacpp.annotation.*;
 import org.bytedeco.javacpp.tools.*;
 
 @Properties(
-    value = @Platform(
+    value = {@Platform(
         includepath = {".."},
         //preloadpath = {"/path/to/deps/"},
         linkpath = {".."},
@@ -13,6 +13,11 @@ import org.bytedeco.javacpp.tools.*;
         //preload = {"DependentLib"},
         link = {"raylib"}
     ),
+        @Platform(
+                value = "linux",
+                linkpath = {"../lib/linux"},
+                link = {"raylib","X11"}
+        )},
     target = "com.raylib.Raylib"
     //helper = "com.raylib.Colors"
 )
