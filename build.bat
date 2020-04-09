@@ -17,5 +17,5 @@ echo "STEP 3 - compile helper classes"
 cd src
 javac -cp ..\javacpp.jar;..\build com\raylib\*.java -d ..\build
 cd ..
-echo "STEP 4 - jar archive"
-jar cf jaylib.jar -C build .
+rem echo "STEP 4 - jar archive"
+rem jar cf jaylib.jar -C build .

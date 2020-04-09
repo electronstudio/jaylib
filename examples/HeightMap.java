@@ -1,11 +1,11 @@
-package com.raylib;
-
-import com.raylib.Jaylib.*;
+import com.raylib.Jaylib.Vector3;
+import com.raylib.Jaylib.Camera;
+import com.raylib.Raylib;
 
 import static com.raylib.Jaylib.*;
 
 
-public class Test {
+public class HeightMap {
     public static void main(String args[]) {
         InitWindow(800, 450, "Raylib static texture test");
         SetTargetFPS(60);
@@ -35,6 +35,4 @@ public class Test {
         }
         Raylib.CloseWindow();
     }
-
-
 }

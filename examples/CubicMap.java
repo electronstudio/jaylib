@@ -9,8 +9,6 @@
 *
 ********************************************************************************************/
 
-package models;
-
 import com.raylib.Jaylib.Vector3;
 import com.raylib.Jaylib.Vector2;
 import com.raylib.Jaylib.Camera;
