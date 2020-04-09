@@ -13,11 +13,22 @@ import org.bytedeco.javacpp.tools.*;
         //preload = {"DependentLib"},
         link = {"raylib"}
     ),
+    @Platform(
+        value = {"windows"},
+        compiler = "cpp11",
+        linkpath = {"..\\lib\\windows"},
+        link = {"raylib"},
+        //preloadpath={"..\\lib\\windows"},
+        resource = {"jniRaylib.dll","raylib.dll"}
+    ),
+
+
         @Platform(
                 value = "linux",
                 linkpath = {"../lib/linux"},
                 link = {"raylib","X11"}
         )},
+
     target = "com.raylib.Raylib"
     //helper = "com.raylib.Colors"
 )
