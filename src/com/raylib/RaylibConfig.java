@@ -31,8 +31,10 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"linux-x86_64"},
-                        linkpath = {"../lib/linux"},
-                        link = {"raylib", "X11"}
+                        linkpath = {RaylibConfig.path+"/lib/linux"},
+                        link = {"raylib", "X11"},
+                        includepath = {RaylibConfig.path},
+                        include = {"raylib.h"}
                 )},
 
         target = "com.raylib.Raylib"
@@ -40,8 +42,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 )
 public class RaylibConfig implements InfoMapper {
 
+    public static final String path = "/home/richard/jaylib";
     //public static final String path = "/Users/richard/IdeaProjects/jaylib";
-    public static final String path = "C:\\Users\\Richard\\jaylib";
+    //public static final String path = "C:\\Users\\Richard\\jaylib";
 
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("!defined(__cplusplus) && !defined(bool)").define(false))

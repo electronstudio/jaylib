@@ -33,4 +33,4 @@ javac -cp ../build com/raylib/*.java -d ../build
 cd ..
 echo "STEP 6 - uber jar archive"
 jar cf jaylib.jar -C build .
-sleep 100
+#sleep 100
