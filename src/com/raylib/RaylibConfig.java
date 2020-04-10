@@ -11,11 +11,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"windows-x86_64"},
-
-                        linkpath = {"..\\lib\\windows"},
+                        linkpath = {RaylibConfig.path+"\\lib\\windows"},
                         link = {"raylib"},
                         //preloadpath={"..\\lib\\windows"},
-                        resource = {"jniRaylib.dll", "raylib.dll"}
+                        resource = {"jniRaylib.dll", "raylib.dll"},
+                        includepath = {RaylibConfig.path},
+                        include = {"raylib.h"}
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
@@ -38,11 +39,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         //helper = "com.raylib.Colors"
 )
 public class RaylibConfig implements InfoMapper {
-    static {
-        System.out.println( System.getProperty("user.dir"));
-    }
 
-    public static final String path = "/Users/richard/IdeaProjects/jaylib";
+    //public static final String path = "/Users/richard/IdeaProjects/jaylib";
+    public static final String path = "C:\\Users\\Richard\\jaylib";
 
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("!defined(__cplusplus) && !defined(bool)").define(false))
