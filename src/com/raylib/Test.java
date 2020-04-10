@@ -7,7 +7,7 @@ import static com.raylib.Jaylib.*;
 
 public class Test {
     public static void main(String args[]) {
-        InitWindow(800, 450, "Raylib static texture test");
+        InitWindow(800, 450, "Hello world");
         SetTargetFPS(60);
         Camera camera = new Camera(new Vector3(18,16,18),new Vector3(), new Vector3(0,1,0), 45, 0);
 
@@ -29,7 +29,7 @@ public class Test {
             DrawModel(model, new Vector3(-8,0,-8), 1, RED);
             DrawGrid(20, 1.0f);
             EndMode3D();
-            DrawText("This mesh should be textured", 190, 200, 20, VIOLET);
+            DrawText("Hello world", 190, 200, 20, VIOLET);
             DrawFPS(20, 20);
             EndDrawing();
         }
