@@ -15,8 +15,10 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         link = {"raylib"},
                         //preloadpath={"..\\lib\\windows"},
                         //resource = {"jniRaylib.dll"},
+                        preloadpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
                         includepath = {"C:\\Users\\Richard\\jaylib"},
-                        include = {"raylib.h"}
+                        include = {"raylib.h"},
+                        preload={"raylib"}
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
