@@ -14,7 +14,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         linkpath = {RaylibConfig.path+"\\lib\\windows"},
                         link = {"raylib"},
                         //preloadpath={"..\\lib\\windows"},
-                        resource = {"jniRaylib.dll"},
+                        //resource = {"jniRaylib.dll"},
                         includepath = {RaylibConfig.path},
                         include = {"raylib.h"}
                 ),
@@ -43,8 +43,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 public class RaylibConfig implements InfoMapper {
 
     //public static final String path = "/home/richard/jaylib";
-    public static final String path = "/Users/richard/IdeaProjects/jaylib";
-    //public static final String path = "C:\\Users\\Richard\\jaylib";
+    //public static final String path = "/Users/richard/IdeaProjects/jaylib";
+    public static final String path = "C:\\Users\\Richard\\jaylib";
 
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("!defined(__cplusplus) && !defined(bool)").define(false))
