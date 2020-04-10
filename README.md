@@ -71,14 +71,14 @@ On weirdy Windows:
     
 ## How to build
 
-Edit src/com/raylib/RaylibConfig.java.  Change the path variable to the current directory.  (Yes you would think JavaCPP could work this out for itself but it seems not.)
+Edit src/com/raylib/RaylibConfig.java.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work.)
 
 Run:
 `./build.sh`
 
 This will build you a jaylib.jar uber-jar.
 
-On Windows the script needs git-bash to run.
+On Windows the script must be run from inside a Visual C 2019 native x64 command prompt, and needs git-bash to be installed.
 
 ## License
 
