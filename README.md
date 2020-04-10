@@ -79,3 +79,8 @@ Run:
 This will build you a jaylib.jar uber-jar.
 
 On Windows the script needs git-bash to run.
+
+## License
+
+Jaylib is distributed under the GPL license with the Classpath Exception to allow linking, the same as OpenJDK itself, so you can use it
+anywhere that you use the JDK, for both free and non-free ('closed source') projects.
