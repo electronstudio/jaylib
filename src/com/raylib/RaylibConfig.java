@@ -11,18 +11,18 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"windows-x86_64"},
-                        linkpath = {RaylibConfig.path+"\\lib\\windows"},
+                        linkpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
                         link = {"raylib"},
                         //preloadpath={"..\\lib\\windows"},
                         //resource = {"jniRaylib.dll"},
-                        includepath = {RaylibConfig.path},
+                        includepath = {"C:\\Users\\Richard\\jaylib"},
                         include = {"raylib.h"}
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
-                        linkpath = {RaylibConfig.path+"/lib/mac"},
+                        linkpath = {"/Users/richard/IdeaProjects/jaylib/lib/mac"},
                         link = {"raylib"},
-                        includepath = {RaylibConfig.path},
+                        includepath = {"/Users/richard/IdeaProjects/jaylib"},
                         //preloadpath = {"/path/to/deps/"},
                         include = {"raylib.h"}
                         //preload = {"DependentLib"},
@@ -31,9 +31,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"linux-x86_64"},
-                        linkpath = {RaylibConfig.path+"/lib/linux", "/usr/lib/x86_64-linux-gnu"},
+                        linkpath = {"/home/richard/jaylib/lib/linux", "/usr/lib/x86_64-linux-gnu"},
                         link = {"X11", "raylib"},
-                        includepath = {RaylibConfig.path},
+                        includepath = {"/home/richard/jaylib"},
                         include = {"raylib.h"}
                 )},
 
@@ -42,9 +42,6 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 )
 public class RaylibConfig implements InfoMapper {
 
-    //public static final String path = "/home/richard/jaylib";
-    //public static final String path = "/Users/richard/IdeaProjects/jaylib";
-    public static final String path = "C:\\Users\\Richard\\jaylib";
 
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("!defined(__cplusplus) && !defined(bool)").define(false))
