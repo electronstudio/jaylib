@@ -10,16 +10,15 @@ JavaCPP is very mature and powerful but not hugely documented, so it is probably
 doing so far.
 See [issues](https://github.com/electronstudio/jaylib/issues).
 
-## Build
+# Status
 
-Edit src/com/raylib/RaylibConfig.java.  Change the path variable to the current directory.  (Yes you would think JavaCPP could work this out for itself but it seems not.)
+All functions from Raylib 3.0 are available on Linux, Mac and Windows (64 bit only).  It works for me, but has not been
+put into production anywhere yet.
 
-Run:
-`./build.sh`
+If there is a newer version of Raylib out then you can probably re-generate these bindings with little or no changes, because
+they are auto-generated.  See [How To Build](#how-to-build)
 
-This will build you a jaylib.jar uber-jar for the current platform.  If you want other platforms you will need to copy the dll files generated on those platforms into this jar.
-
-## Use
+## How to use
 
 Download jaylib.jar.
 
@@ -69,3 +68,14 @@ On MacOS you need this option:
 On weirdy Windows:
 
     java -cp jaylib.jar;. Demo
+    
+## How to build
+
+Edit src/com/raylib/RaylibConfig.java.  Change the path variable to the current directory.  (Yes you would think JavaCPP could work this out for itself but it seems not.)
+
+Run:
+`./build.sh`
+
+This will build you a jaylib.jar uber-jar.
+
+On Windows the script needs git-bash to run.
