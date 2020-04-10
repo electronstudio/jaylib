@@ -10,7 +10,7 @@ cp -R lib/* gen/
 cp raylib.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar com/raylib/Raylib.java
+java -jar ../javacpp.jar -nodelete com/raylib/Raylib.java
 cd ..
 echo "STEP 3 - move compilation results from gen folder to build folder"
 mkdir -p build/com/raylib
