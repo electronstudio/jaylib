@@ -10,7 +10,8 @@ cp -R lib/* gen/
 cp raylib.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar -nodelete com/raylib/Raylib.java
+java -jar ../javacpp.jar -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MT /LD' -nodelete com/raylib/Raylib.java
+# /Oi /O2 /MD /LD /link /INCREMENTAL:NO /LTCG /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /NODEFAULTLIB:MSVCRTD'
 cd ..
 echo "STEP 3 - move compilation results from gen folder to build folder"
 mkdir -p build/com/raylib
@@ -19,7 +20,7 @@ mkdir -p build/com/raylib/macosx-x86_64
 mkdir -p build/com/raylib/linux-x86_64
 # rm gen/com/raylib/Raylib.java
 mv -f gen/com/raylib/*.class build/com/raylib/
-mv -f gen/com/raylib/windows-x86_64/* build/com/raylib/windows-x86_64/
+mv -f gen/com/raylib/windows-x86_64/*.dll build/com/raylib/windows-x86_64/
 mv -f gen/com/raylib/macosx-x86_64/* build/com/raylib/macosx-x86_64/
 mv -f gen/com/raylib/linux-x86_64/* build/com/raylib/linux-x86_64/
 echo "STEP 4 - unzip javacpp.jar"
@@ -33,4 +34,3 @@ javac -cp ../build com/raylib/*.java -d ../build
 cd ..
 echo "STEP 6 - uber jar archive"
 jar cf jaylib.jar -C build .
-#sleep 100

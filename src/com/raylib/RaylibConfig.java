@@ -12,24 +12,21 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 @Platform(
                         value = {"windows-x86_64"},
                         linkpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
+                        //link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib_static"},
                         link = {"raylib"},
-                        //preloadpath={"..\\lib\\windows"},
-                        //resource = {"jniRaylib.dll"},
                         preloadpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
                         includepath = {"C:\\Users\\Richard\\jaylib"},
                         include = {"raylib.h"},
-                        preload={"raylib"}
+                        preload={"raylib"},
+                        compiler = {"!default","foo"}
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
                         linkpath = {"/Users/richard/IdeaProjects/jaylib/lib/mac"},
                         link = {"raylib"},
                         includepath = {"/Users/richard/IdeaProjects/jaylib"},
-                        //preloadpath = {"/path/to/deps/"},
                         include = {"raylib.h"}
-                        //preload = {"DependentLib"},
                 ),
-
 
                 @Platform(
                         value = {"linux-x86_64"},
