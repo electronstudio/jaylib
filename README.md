@@ -20,7 +20,7 @@ they are auto-generated.  See [How To Build](#how-to-build)
 
 ## How to use
 
-Download jaylib.jar.
+Download the latest [jaylib.jar](https://github.com/electronstudio/jaylib/releases/download/v3.0.0-rc5/jaylib.jar) from [releases](https://github.com/electronstudio/jaylib/releases)
 
 Write a demo program, e.g. Demo.java
 
@@ -78,7 +78,7 @@ Run:
 
 This will build you a jaylib.jar uber-jar.
 
-On Windows the script must be run from inside a Visual C 2019 native x64 command prompt, and needs git-bash to be installed.
+On Windows the script must be run from inside a Visual C 2015 native x64 command prompt, and needs git-bash to be installed.
 
 ## License
 
