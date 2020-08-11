@@ -98,7 +98,7 @@ public class Jaylib extends Raylib{
             position(position);
             normal(normal);
         }
-        public RayHitInfo(RayHitInfo rhi) {
+        public RayHitInfo(Raylib.RayHitInfo rhi) {
             this(rhi.hit(), rhi.distance(), rhi.position(), rhi.normal());
         }
     }
