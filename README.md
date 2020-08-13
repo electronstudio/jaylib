@@ -53,21 +53,13 @@ public class Demo {
 }
 ```
 
-Compile it:
+Compile and run it:
 
-    javac -cp jaylib.jar Demo.java
-    
-Run it:
-
-    java -cp jaylib.jar:. Demo
+    java -cp jaylib.jar Demo.java
     
 On MacOS you need this option:
 
-    java -XstartOnFirstThread -cp jaylib.jar:. Demo
-    
-On weirdy Windows:
-
-    java -cp jaylib.jar;. Demo
+    java -XstartOnFirstThread -cp jaylib.jar Demo.java
     
 ## How to build
 
