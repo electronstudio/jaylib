@@ -42,6 +42,21 @@ public class Jaylib extends Raylib{
             type(type);
         }
     }
+    
+    public static class Rectangle extends Raylib.Rectangle {
+        public Rectangle() {
+            super();   
+        }
+        public Rectangle(float x, float y, float width, float height) {
+            x(x);
+            y(y);
+            width(width);
+            height(height);
+        }
+        public Rectangle(Raylib.Rectangle r) {
+            this(r.x(), r.y(), r.width(), r.height());   
+        }
+    }
 
     public static class Vector3 extends Raylib.Vector3{
         public Vector3(){
