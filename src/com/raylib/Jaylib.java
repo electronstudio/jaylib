@@ -58,6 +58,66 @@ public class Jaylib extends Raylib{
         }
     }
 
+    public static class Rectangle extends Raylib.Rectangle {
+        public Rectangle() {
+            super();   
+        }
+        public Rectangle(float x, float y, float width, float height) {
+            super();
+            x(x);
+            y(y);
+            width(width);
+            height(height);
+        }
+        public Rectangle(Raylib.Rectangle r) {
+            this(r.x(), r.y(), r.width(), r.height());   
+        }
+    }
+
+    public static class BoundingBox extends Raylib.BoundingBox {
+        public BoundingBox() {
+            super();
+        }
+        public BoundingBox(Raylib.Vector3 min, Raylib.Vector3 max) {
+            super();
+            min(min);
+            max(max);
+        }
+        public BoundingBox(Raylib.BoundingBox b) {
+            this(b.min(), b.max());   
+        }
+    }
+    
+    public static class Ray extends Raylib.Ray {
+        public Ray() {
+            super();   
+        }
+        public Ray(Raylib.Vector3 position, Raylib.Vector3 direction) {
+            super();
+            position(position);
+            direction(direction);
+        }
+        public Ray(Raylib.Ray r) {
+            this(r.position(), r.direction());   
+        }
+    }
+    
+    public static class RayHitInfo extends Raylib.RayHitInfo {
+        public RayHitInfo() {
+            super();   
+        }
+        public RayHitInfo(boolean hit, float distance, Raylib.Vector3 position, Raylib.Vector3 normal) {
+            super();
+            hit(hit);
+            distance(distance);
+            position(position);
+            normal(normal);
+        }
+        public RayHitInfo(Raylib.RayHitInfo rhi) {
+            this(rhi.hit(), rhi.distance(), rhi.position(), rhi.normal());
+        }
+    }
+    
     public static class Vector3 extends Raylib.Vector3{
         public Vector3(){
             super();
