@@ -71,7 +71,13 @@ On weirdy Windows:
     
 ## How to build
 
-Edit src/com/raylib/RaylibConfig.java.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work.)
+Clone this repo including submodules so you get correct version of Raylib.
+
+    git clone --recurse-submodules https://github.com/electronstudio/jaylib
+
+Build and install Raylib from the `raylib` directory.
+
+Edit `src/com/raylib/RaylibConfig.java`.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work.)
 
 Run:
 `./build.sh`
