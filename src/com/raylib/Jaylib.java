@@ -42,21 +42,6 @@ public class Jaylib extends Raylib{
             type(type);
         }
     }
-    
-    public static class Rectangle extends Raylib.Rectangle {
-        public Rectangle() {
-            super();   
-        }
-        public Rectangle(float x, float y, float width, float height) {
-            x(x);
-            y(y);
-            width(width);
-            height(height);
-        }
-        public Rectangle(Raylib.Rectangle r) {
-            this(r.x(), r.y(), r.width(), r.height());   
-        }
-    }
 
     public static class Rectangle extends Raylib.Rectangle {
         public Rectangle() {
@@ -94,11 +79,11 @@ public class Jaylib extends Raylib{
         }
         public Ray(Raylib.Vector3 position, Raylib.Vector3 direction) {
             super();
-            position(position);
+            _position(position);
             direction(direction);
         }
         public Ray(Raylib.Ray r) {
-            this(r.position(), r.direction());   
+            this(r._position(), r.direction());
         }
     }
     
@@ -110,11 +95,11 @@ public class Jaylib extends Raylib{
             super();
             hit(hit);
             distance(distance);
-            position(position);
+            _position(position);
             normal(normal);
         }
         public RayHitInfo(Raylib.RayHitInfo rhi) {
-            this(rhi.hit(), rhi.distance(), rhi.position(), rhi.normal());
+            this(rhi.hit(), rhi.distance(), rhi._position(), rhi.normal());
         }
     }
     
@@ -141,7 +126,6 @@ public class Jaylib extends Raylib{
             super();
             x(x);
             y(y);
-
         }
         public Vector2(Raylib.Vector3 v){
             this(v.x(), v.y());
