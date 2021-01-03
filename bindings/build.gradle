@@ -1,0 +1,51 @@
+plugins {
+    id 'java-library'
+
+    // JavaCPP
+    id 'org.bytedeco.gradle-javacpp-build' version "1.5.4"
+    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.4"
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.13'
+
+    // JavaCPP
+    api "org.bytedeco:javacpp:1.5.4"
+
+}
+
+// JavaCPP Targets
+ext {
+    javacppPlatform = 'linux-x86_64,macosx-x86_64,windows-x86_64'
+}
+
+tasks.withType(org.bytedeco.gradle.javacpp.BuildTask) {
+    // set here default values for all build tasks below, typically just includePath and linkPath,
+    // but also properties to set the path to the NDK and its compiler in the case of Android
+
+    includePath =  ["$projectDir/src/main/include/"]
+    linkPath =  ["$projectDir/lib"]
+    
+}
+compileJava.dependsOn javacppBuildCommand
+
+javacppBuildCommand {
+    // typically set here the buildCommand to the script that fills up includePath and linkPath
+}
+
+javacppBuildParser {
+    // typically set here the classOrPackageNames to class names implementing InfoMap
+    classOrPackageNames = ['com.raylib.RaylibConfig']
+    outputDirectory = file("$buildDir/generated/sources/javacpp/")
+}
+
+javacppBuildCompiler {
+    // typically set here boolean flags like copyLibs
+    copyLibs = true
+}
