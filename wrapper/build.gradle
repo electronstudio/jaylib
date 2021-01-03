@@ -37,3 +37,41 @@ shadowJar {
     from project(":bindings").sourceSets.main.output
     classifier ""
 }
+
+// Javadoc
+task('betterJavadoc', type: Javadoc) {
+    dependsOn project(":bindings").build
+
+    // Grab wrapper and binding sources
+    source = [project.sourceSets.main.allJava, project(":bindings").sourceSets.main.allJava]
+    classpath = project.sourceSets.main.runtimeClasspath
+
+    // Exclude the gen sources
+    exclude "**/RaylibConfig.java"
+
+    // Set the JavaDoc webpage title
+    title = "$project.name $project.version API"
+
+    // These fix a JavaDoc bug in Java11
+    options.addBooleanOption('-no-module-directories', true)
+    options.author true
+
+    // External references and options
+    options.links = [
+        'http://docs.spring.io/spring/docs/4.3.x/javadoc-api/', 
+        'http://docs.oracle.com/javase/8/docs/api/', 
+        'http://docs.spring.io/spring-ws/docs/2.3.0.RELEASE/api/', 
+        'http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/'
+    ]
+    
+    options.addStringOption 'Xdoclint:none'
+    options.addStringOption '-quiet'
+}
+
+// Javadoc JAR
+project.task('javadocJar', type: Jar) {
+    from project.tasks.betterJavadoc
+    classifier = 'javadoc'
+}
+
+project.tasks.assemble.dependsOn project.tasks.javadocJar
