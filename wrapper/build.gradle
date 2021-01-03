@@ -17,7 +17,10 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 
     // Expose the bindings
-    api project(":bindings")
+    compile project(path: ':bindings', configuration: 'shadow')
+
+    // JavaCPP
+    implementation "org.bytedeco:javacpp:1.5.4"
 
 }
 
@@ -33,10 +36,12 @@ project.tasks.assemble.dependsOn project.tasks.srcJar
 
 // Shadow with no classifier
 shadowJar {
-    from sourceSets.main.output
-    from project(":bindings").sourceSets.main.output
+    // from sourceSets.main.output
+    // from project(":bindings").sourceSets.main.output
+    // configurations = [project.configurations.compile]
     classifier ""
 }
+project.tasks.shadowJar.dependsOn build
 
 // Javadoc
 task('betterJavadoc', type: Javadoc) {

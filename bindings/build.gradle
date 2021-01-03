@@ -4,6 +4,9 @@ plugins {
     // JavaCPP
     id 'org.bytedeco.gradle-javacpp-build' version "1.5.4"
     id 'org.bytedeco.gradle-javacpp-platform' version "1.5.4"
+
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    
 }
 
 repositories {
@@ -16,7 +19,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 
     // JavaCPP
-    api "org.bytedeco:javacpp:1.5.4"
+    implementation "org.bytedeco:javacpp:1.5.4"
 
 }
 
@@ -57,3 +60,11 @@ task('srcJar', type: Jar) {
 }
 
 project.tasks.assemble.dependsOn project.tasks.srcJar
+
+// Configure shadow
+shadowJar {
+    from sourceSets.main.output
+    configurations = [project.configurations.compile]
+    classifier ""
+}
+project.tasks.shadowJar.dependsOn build
