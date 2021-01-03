@@ -36,9 +36,6 @@ project.tasks.assemble.dependsOn project.tasks.srcJar
 
 // Shadow with no classifier
 shadowJar {
-    // from sourceSets.main.output
-    // from project(":bindings").sourceSets.main.output
-    // configurations = [project.configurations.compile]
     classifier ""
 }
 project.tasks.shadowJar.dependsOn build
