@@ -4,10 +4,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-// Apply tools for building and publishing jars
-apply from: "gradle_scripts/srcjar.gradle"
-apply from: "gradle_scripts/javadoc.gradle"
-
 repositories {
     jcenter()
 }
@@ -22,22 +18,14 @@ dependencies {
 
 }
 
+// Source Jar
+task('srcJar', type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
 
-// jar {
-//     // duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
-//     // manifest.attributes "Main-Class": "org.bytedeco.javacv.samples.Demo"
+project.tasks.assemble.dependsOn project.tasks.srcJar
 
-//     manifest {
-//         attributes 'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
-//                    'Implementation-Title': 'Jaylib',
-//                    'Implementation-Vendor': 'electronstudio',
-//                    'Implementation-Version': version,
-//                    'Specification-Title': 'Jaylib',
-//                    'Specification-Vendor': 'electronstudio',
-//                    'Specification-Version': version
-//     }
-
-//     from {
-//         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-//     }
-// }
+shadowJar {
+    classifier ""
+}

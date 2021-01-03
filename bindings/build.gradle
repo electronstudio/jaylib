@@ -6,9 +6,6 @@ plugins {
     id 'org.bytedeco.gradle-javacpp-platform' version "1.5.4"
 }
 
-// Load script for building a source jar
-apply from: "../gradle_scripts/srcjar.gradle"
-
 repositories {
     jcenter()
 }
@@ -52,3 +49,11 @@ javacppBuildCompiler {
     // typically set here boolean flags like copyLibs
     copyLibs = true
 }
+
+// Source Jar
+task('srcJar', type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+project.tasks.assemble.dependsOn project.tasks.srcJar
