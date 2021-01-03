@@ -1,3 +1,6 @@
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id 'java-library'
 
@@ -19,13 +22,18 @@ dependencies {
 }
 
 // Source Jar
-task('srcJar', type: Jar) {
+task('srcJar', type: ShadowJar) {
+    dependsOn project(":bindings").build
     from sourceSets.main.allJava
+    from project(":bindings").sourceSets.main.allJava
     classifier = 'sources'
 }
 
 project.tasks.assemble.dependsOn project.tasks.srcJar
 
+// Shadow with no classifier
 shadowJar {
+    from sourceSets.main.output
+    from project(":bindings").sourceSets.main.output
     classifier ""
 }
