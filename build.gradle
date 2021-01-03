@@ -1,10 +1,12 @@
 plugins {
     id 'java-library'
 
-    // JavaCPP
-    id 'org.bytedeco.gradle-javacpp-build' version "1.5.4"
-    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.4"
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
+
+// Apply tools for building and publishing jars
+apply from: "gradle_scripts/srcjar.gradle"
+apply from: "gradle_scripts/javadoc.gradle"
 
 repositories {
     jcenter()
@@ -15,65 +17,27 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 
-    // JavaCPP
-    api "org.bytedeco:javacpp:1.5.4"
+    // Expose the bindings
+    api project(":bindings")
 
 }
 
-// JavaCPP Targets
-ext {
-    javacppPlatform = 'linux-x86_64,macosx-x86_64,windows-x86_64'
-}
 
-sourceSets {
-    main {
-        java {
-            srcDirs += "src/main/javacpp"
-            srcDirs += "$buildDir/generated/sources/javacpp"
-        }
-    }
-}
+// jar {
+//     // duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
+//     // manifest.attributes "Main-Class": "org.bytedeco.javacv.samples.Demo"
 
-tasks.withType(org.bytedeco.gradle.javacpp.BuildTask) {
-    // set here default values for all build tasks below, typically just includePath and linkPath,
-    // but also properties to set the path to the NDK and its compiler in the case of Android
+//     manifest {
+//         attributes 'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
+//                    'Implementation-Title': 'Jaylib',
+//                    'Implementation-Vendor': 'electronstudio',
+//                    'Implementation-Version': version,
+//                    'Specification-Title': 'Jaylib',
+//                    'Specification-Vendor': 'electronstudio',
+//                    'Specification-Version': version
+//     }
 
-    includePath =  ["$projectDir/src/main/include/"]
-    linkPath =  ["$projectDir/lib"]
-    
-}
-compileJava.dependsOn javacppBuildCommand
-
-javacppBuildCommand {
-    // typically set here the buildCommand to the script that fills up includePath and linkPath
-}
-
-javacppBuildParser {
-    // typically set here the classOrPackageNames to class names implementing InfoMap
-    classOrPackageNames = ['com.raylib.RaylibConfig']
-    outputDirectory = file("$buildDir/generated/sources/javacpp/")
-}
-
-javacppBuildCompiler {
-    // typically set here boolean flags like copyLibs
-    copyLibs = true
-}
-
-jar {
-    // duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
-    // manifest.attributes "Main-Class": "org.bytedeco.javacv.samples.Demo"
-
-    manifest {
-        attributes 'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
-                   'Implementation-Title': 'Jaylib',
-                   'Implementation-Vendor': 'electronstudio',
-                   'Implementation-Version': version,
-                   'Specification-Title': 'Jaylib',
-                   'Specification-Vendor': 'electronstudio',
-                   'Specification-Version': version
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
+//     from {
+//         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//     }
+// }
