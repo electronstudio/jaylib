@@ -1,0 +1,5 @@
+rootProject.name = 'jaylib'
+
+include "bindings"
+include "wrapper"
+include "examples"
