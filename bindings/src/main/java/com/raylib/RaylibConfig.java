@@ -11,28 +11,28 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"windows-x86_64"},
-                        linkpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
+                        linkpath = {"/jaylib/bindings/lib/windows-x86_64"},
                         //link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib_static"},
                         link = {"raylib"},
-                        preloadpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
-                        includepath = {"C:\\Users\\Richard\\jaylib"},
+                        preloadpath = {"/jaylib/bindings/lib/windows-x86_64"},
+                        includepath = {"/jaylib/bindings/src/main/c"},
                         include = {"raylib.h"},
                         preload={"raylib"},
                         compiler = {"!default","foo"}
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
-                        linkpath = {"/Users/richard/IdeaProjects/jaylib/lib/mac"},
+                        linkpath = {"/jaylib/bindings/lib/macosx-x86_64"},
                         link = {"raylib"},
-                        includepath = {"/Users/richard/IdeaProjects/jaylib"},
+                        includepath = {"/jaylib/bindings/src/main/c"},
                         include = {"raylib.h"}
                 ),
 
                 @Platform(
                         value = {"linux-x86_64"},
-                        linkpath = {"/home/richard/jaylib/lib/linux", "/usr/lib/x86_64-linux-gnu"},
+                        linkpath = {"/jaylib/bindings/lib/linux-x86_64", "/usr/lib/x86_64-linux-gnu"},
                         link = {"X11", "raylib"},
-                        includepath = {"/home/richard/jaylib"},
+                        includepath = {"/jaylib/bindings/src/main/c"},
                         include = {"raylib.h", "rlgl.h"}
                 )},
 

@@ -28,8 +28,8 @@ tasks.withType(org.bytedeco.gradle.javacpp.BuildTask) {
     // but also properties to set the path to the NDK and its compiler in the case of Android
 
     includePath =  ["$projectDir/src/main/c"]
-    println "Configuring JavaCPP output for platform: $javacppPlatform"
-    linkPath = ["$projectDir/lib/$javacppPlatform"] 
+    // println "Configuring JavaCPP output for platform: $javacppPlatform"
+    linkPath = ["$projectDir/lib"] 
 
     propertyKeysAndValues = [
         "platform.compiler.foo": "// /Oi /O2 /EHsc /Gy /GL /MT /LD"
