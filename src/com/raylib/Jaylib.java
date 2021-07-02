@@ -32,6 +32,16 @@ public class Jaylib extends Raylib{
         return new Raylib.Color().r((byte) r).g((byte) g).b((byte) b).a((byte) a);
     }
 
+    public static class Color extends Raylib.Color{
+        public Color(int r, int g, int b, int a){
+            super();
+            r((byte)r);
+            g((byte)g);
+            b((byte)b);
+            a((byte)a);
+        }
+    }
+
     public static class Camera extends Raylib.Camera3D{
         public Camera(Raylib.Vector3 position, Raylib.Vector3 target,  Raylib.Vector3 up,  float fovy, int projection){
             super();

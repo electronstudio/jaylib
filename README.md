@@ -94,3 +94,18 @@ anywhere that you use the JDK, for both free and non-free ('closed source') proj
 ## Tutorials
 
 [Tutorial videos by Odhynth](https://www.youtube.com/watch?v=YhqDrzBMC8E&list=PLjWtYjfP9T98elE35qy67vnZs5_u8Aa83)
+
+## Performance
+
+Every call to C is costly, so it's slightly faster if you use Java data structures and functions when calculating
+in your update loop
+and then only convert them to native C data structures when you have to call the C functions for drawing.
+
+### Bunnymark
+
+| Library                | Implementation    | Bunnies (60 FPS) | Percentage    |
+| -------------          | -------------     | -------------    | ------------- |
+| Raylib 3.7             | C                 | 180000           | 100%          |
+| Jaylib 3.7 | Java 11         | 39000            | 22%           |
+| Jaylib 3.7 | Java 11 Avoiding native calls         | 64000            | 36%           |
+| Jaylib 3.7 | Java 17 Avoiding native calls         | 73000            | 41%           |
