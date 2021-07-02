@@ -90,3 +90,13 @@ On Windows the script must be run from inside a Visual C 2015 native x64 command
 
 Jaylib is distributed under the GPL license with the Classpath Exception to allow linking, the same as OpenJDK itself, so you can use it
 anywhere that you use the JDK, for both free and non-free ('closed source') projects.
+
+## Tutorials
+
+Tutorial videos by [Odhynth](https://www.youtube.com/channel/UCA2Yx1G13yaNP7oVebonmVw)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YhqDrzBMC8E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8tRyahjhVZU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_T2txqo50w4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
