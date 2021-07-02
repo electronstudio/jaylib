@@ -30,9 +30,9 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"linux-x86_64"},
-                        linkpath = {"/home/richard/jaylib/lib/linux", "/usr/lib/x86_64-linux-gnu"},
+                        linkpath = {"/usr/lib/x86_64-linux-gnu"}, // "/home/richard/jaylib/lib/linux"
                         link = {"X11", "raylib"},
-                        includepath = {"/home/richard/jaylib"},
+                        //includepath = {"/home/richard/jaylib"},
                         include = {"raylib.h", "rlgl.h"}
                 )},
 
