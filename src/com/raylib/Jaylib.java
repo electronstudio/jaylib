@@ -33,13 +33,13 @@ public class Jaylib extends Raylib{
     }
 
     public static class Camera extends Raylib.Camera3D{
-        public Camera(Raylib.Vector3 position, Raylib.Vector3 target,  Raylib.Vector3 up,  float fovy, int type){
+        public Camera(Raylib.Vector3 position, Raylib.Vector3 target,  Raylib.Vector3 up,  float fovy, int projection){
             super();
             _position(position);
             target(target);
             up(up);
             fovy(fovy);
-            type(type);
+            projection(projection);
         }
     }
 
