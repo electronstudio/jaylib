@@ -33,7 +33,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         linkpath = {"/usr/lib/x86_64-linux-gnu"}, // "/home/richard/jaylib/lib/linux"
                         link = {"X11", "raylib"},
                         //includepath = {"/home/richard/jaylib"},
-                        include = {"raylib.h", "rlgl.h"}
+                        include = {"raylib.h", "rlgl.h", "raymath.h"}
                 )},
 
         target = "com.raylib.Raylib"
@@ -55,6 +55,7 @@ public class RaylibConfig implements InfoMapper {
                 //.put(new Info("defined(GRAPHICS_API_OPENGL_ES2)").define(false))
                 .put(new Info("defined(GRAPHICS_API_OPENGL_11)").define(false))
                 .put(new Info("defined(RLGL_IMPLEMENTATION)").define(false))
+                .put(new Info("RMDEF").cppText("#define RMDEF"))
                // .put(new Info("GLAD_REALLOC", "GLAD_FREE").cppTypes().annotations())
 
         ;

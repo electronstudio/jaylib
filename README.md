@@ -71,9 +71,10 @@ On weirdy Windows:
     
 ## How to build
 
-Clone this repo including submodules so you get correct version of Raylib.
+Clone this repo including submodules so you get correct version of Raylib.  (On Windows, Google for how to enable symlinks
+)
 
-    git clone --recurse-submodules https://github.com/electronstudio/jaylib
+    git clone --recurse-submodules  -c core.symlinks=true https://github.com/electronstudio/jaylib
 
 Build and install Raylib from the `raylib` directory.
 
