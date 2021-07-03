@@ -11,7 +11,7 @@ cd ..
 mkdir -p gen/com/raylib
 mv src/com/raylib/RaylibConfig.class gen/com/raylib
 #cp -R lib/* gen/
-cp raylib.h gen/com/raylib
+cp *.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
 java -jar ../javacpp.jar -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MT /LD' -nodelete com/raylib/Raylib.java
