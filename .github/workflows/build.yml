@@ -54,3 +54,38 @@ jobs:
           name: jar
           path: ./*.jar
 
+  build-mac:
+    runs-on: macos-10.15
+    env:
+      VERSION: 3.7.0
+      PLATFORM: macosx-x86_64
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: '11'
+
+
+      - name: Build raylib
+        run: |
+          cd raylib/src
+          make -j2
+          sudo cp libraylib.a /usr/local/lib/
+
+      - name: Build jaylib
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+          ./build-docs.sh
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: jar
+          path: ./*macosx-x86_64*.jar
