@@ -53,6 +53,10 @@ public class Jaylib extends Raylib{
         }
     }
 
+    public Raylib.Rectangle Rectangle(float x, float y, float width, float height) {
+        return new Raylib.Rectangle().x(x).y(y).width(width).height(height);
+    }
+
     public static class Rectangle extends Raylib.Rectangle {
         public Rectangle() {
             super();   
