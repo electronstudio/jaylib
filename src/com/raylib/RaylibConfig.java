@@ -22,10 +22,10 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 ),
                 @Platform(
                         value = {"macosx-x86_64"},
-                        linkpath = {"/Users/richard/IdeaProjects/jaylib/lib/mac"},
+                        //linkpath = {"."},
                         link = {"raylib"},
-                        includepath = {"/Users/richard/IdeaProjects/jaylib"},
-                        include = {"raylib.h"}
+                        //includepath = {"/Users/richard/IdeaProjects/jaylib"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h"}
                 ),
 
                 @Platform(
