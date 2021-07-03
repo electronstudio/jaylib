@@ -56,9 +56,6 @@ jobs:
 
   build-mac:
     runs-on: macos-10.15
-    env:
-      VERSION: 3.7.0
-      PLATFORM: macosx-x86_64
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -79,6 +76,9 @@ jobs:
           sudo cp libraylib.a /usr/local/lib/
 
       - name: Build jaylib
+        env:
+          VERSION: 3.7.0
+          PLATFORM: macosx-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh
