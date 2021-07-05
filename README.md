@@ -60,7 +60,7 @@ On MacOS you need this option:
     
 On weirdy Windows:
 
-    java -cp jaylib.jar;:jaylib-natives.jar. Demo
+    java -cp jaylib.jar;jaylib-natives.jar;. Demo
 
 ## Known issues
 
@@ -93,7 +93,7 @@ of which have an arrays of `maps`.  To access the second map of the first materi
 
 ### RLGL and Raymath
 
-These additional libraries are included in the Linux and Mac natives but may not be (or may not work) in the Windows.
+These additional libraries are included in the Linux and Mac natives but may not work properly in the Windows natives.
 
 ## How to build
 
