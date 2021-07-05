@@ -11,12 +11,11 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
                 @Platform(
                         value = {"windows-x86_64"},
-                        linkpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
-                        //link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib_static"},
-                        link = {"raylib"},
-                        preloadpath = {"C:\\Users\\Richard\\jaylib\\lib\\windows"},
+                        linkpath = {"C:\\Users\\Richard\\jaylib"},
+                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"},
+                        preloadpath = {"C:\\Users\\Richard\\jaylib"},
                         includepath = {"C:\\Users\\Richard\\jaylib"},
-                        include = {"raylib.h"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h"},
                         preload={"raylib"},
                         compiler = {"!default","foo"}
                 ),
