@@ -14,7 +14,7 @@ mv src/com/raylib/RaylibConfig.class gen/com/raylib
 cp *.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MT /LD' -nodelete com/raylib/Raylib.java
+java -jar ../javacpp.jar -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MD /LD' -nodelete com/raylib/Raylib.java
 # /Oi /O2 /MD /LD /link /INCREMENTAL:NO /LTCG /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /NODEFAULTLIB:MSVCRTD'
 if [ $? -ne '0' ]; then
   echo "Fix this before trying again"
@@ -40,4 +40,4 @@ if [ $? -ne '0' ]; then
 fi
 cd ..
 echo "STEP 6 - uber jar archive"
-jar cf jaylib-$VERSION.jar -C build .
+jar cf jaylib-$RAYLIB_VERSION.jar -C build .

@@ -41,8 +41,8 @@ jobs:
 
       - name: Build jaylib
         env:
-          VERSION: 3.7.0
-          PLATFORM: linux-x86_64
+          RAYLIB_VERSION: 3.7.0
+          RAYLIB_PLATFORM: linux-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh
@@ -79,8 +79,8 @@ jobs:
 
       - name: Build jaylib
         env:
-          VERSION: 3.7.0
-          PLATFORM: macosx-x86_64
+          RAYLIB_VERSION: 3.7.0
+          RAYLIB_PLATFORM: macosx-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh

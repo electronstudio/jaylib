@@ -97,7 +97,15 @@ These additional libraries are included in the Linux and Mac natives but may not
 
 ## How to build
 
-(See the Github Actions build file for latest more detailed exact platform specific steps.)
+### Linux and Mac
+
+We have automated builds on Github Actions.  To build manually, follow the steps in the [build file](https://github.com/electronstudio/jaylib/blob/master/.github/workflows/build.yml)
+
+### Windows
+
+git-bash needs to to be installed.
+
+Open a Visual C 2019 native x64 command prompt *with admin permissions* so that symlinks work.
 
 Clone this repo including submodules so you get correct version of Raylib.  (On Windows, Google for how to enable symlinks
 )
@@ -105,6 +113,8 @@ Clone this repo including submodules so you get correct version of Raylib.  (On 
     git clone --recurse-submodules  -c core.symlinks=true https://github.com/electronstudio/jaylib
 
 Build and install Raylib from the `raylib` directory.
+
+    
 
 Edit `src/com/raylib/RaylibConfig.java`.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work.)
 
@@ -115,7 +125,7 @@ Run:
 
 This will build you a jaylib.jar uber-jar and natives jar and a docs jar.
 
-On Windows the script must be run from inside a Visual C 2019 native x64 command prompt, and needs git-bash to be installed.
+
 
 ## License
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "STEP 1 - move compilation results from gen folder to natives folder"
 rm -rf natives
-mkdir -p natives/com/raylib/$PLATFORM
-mv -f gen/com/raylib/$PLATFORM/* natives/com/raylib/$PLATFORM/
+mkdir -p natives/com/raylib/$RAYLIB_PLATFORM
+mv -f gen/com/raylib/$PLATFORM/* natives/com/raylib/$RAYLIB_PLATFORM/
 
 echo "STEP 2 -  native jar archive"
-jar cf jaylib-natives-$PLATFORM-$VERSION.jar -C natives .
+jar cf jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar -C natives .
