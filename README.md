@@ -114,16 +114,21 @@ Clone this repo including submodules so you get correct version of Raylib.  (On 
 
 Build and install Raylib from the `raylib` directory.
 
-    
+    cd jaylib/raylib-
+    mkdir build
+    cd build
+    cmake -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+    msbuild raylib.sln /target:raylib /property:Configuration=Release
+    copy raylib\Release\raylib.lib ..\..
+    cd ..\..
 
-Edit `src/com/raylib/RaylibConfig.java`.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work.)
 
-Edit `build.sh` to set platform variables.
+Edit `src/com/raylib/RaylibConfig.java`.  Change the paths to the correct directories on your system.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work on Windows.)
 
 Run:
-`./build.sh`
+`./build-windows.sh`
 
-This will build you a jaylib.jar uber-jar and natives jar and a docs jar.
+This will build you a jaylib.jar uber-jar and natives jar and run a test.
 
 
 
