@@ -13,24 +13,52 @@ See [issues](https://github.com/electronstudio/jaylib/issues).
 If there is a newer version of Raylib out then you can probably re-generate these bindings with little or no changes, because
 they are auto-generated.  See [How To Build](#how-to-build)
 
-## How to use
+## Example project
+
+Download [the example project](https://github.com/electronstudio/jaylib-example-project) and import it into IntelliJ or Eclipse to get up and running immediately.
+
+## How to use with Gradle
+
+```
+repositories {
+    maven {
+        url "https://dl.cloudsmith.io/public/electron-studio/jaylib/maven/"
+    }
+}
+
+dependencies {
+    implementation 'uk.co.electronstudio.jaylib:jaylib:3.7.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib-natives-windows-x86_64:3.7.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib-natives-macosx-x86_64:3.7.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib-natives-linux-x86_64:3.7.+'
+}
+
+
+```
+
+## How to use from command line
 
 Download the latest `jaylib.jar` and `jaylib-natives.jar` for your platform(s) from [releases](https://github.com/electronstudio/jaylib/releases)
 
 Write a demo program, e.g. Demo.java
 
 ```java
-import com.raylib.Raylib;
-import static com.raylib.Jaylib.*;
+import static com.raylib.Jaylib.RAYWHITE;
+import static com.raylib.Jaylib.VIOLET;
+import static com.raylib.Raylib.*;
 
 public class Demo {
     public static void main(String args[]) {
         InitWindow(800, 450, "Demo");
         SetTargetFPS(60);
-        Camera camera = new Camera(new Vector3().x(18).y(16).z(18),new Vector3(), new Vector3().x(0).y(1).z(0), 45, 0);
+        Camera3D camera = new Camera3D()
+                ._position(new Vector3().x(18).y(16).z(18))
+                .target(new Vector3())
+                .up(new Vector3().x(0).y(1).z(0))
+                .fovy(45).projection(CAMERA_PERSPECTIVE);
         SetCameraMode(camera, CAMERA_ORBITAL);
 
-        while(!WindowShouldClose()){
+        while (!WindowShouldClose()) {
             UpdateCamera(camera);
             BeginDrawing();
             ClearBackground(RAYWHITE);
@@ -41,26 +69,26 @@ public class Demo {
             DrawFPS(20, 20);
             EndDrawing();
         }
-        Raylib.CloseWindow();
+        CloseWindow();
     }
 }
 ```
 
 Compile it:
 
-    javac -cp jaylib.jar:jaylib-natives.jar Demo.java
+    javac -cp jaylib-3.7.0.jar:jaylib-natives-linux-x86_64-3.7.0.jar Demo.java
     
 Run it:
 
-    java -cp jaylib.jar:jaylib-natives.jar:. Demo
+    java -cp jaylib-3.7.0.jar:jaylib-natives-linux-x86_64-3.7.0.jar:. Demo
     
-On MacOS you need this option:
+On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib.jar:jaylib-natives.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-3.7.0.jar:jaylib-natives-macosx-x86_64-3.7.0.jar:. Demo
     
-On weirdy Windows:
+On weirdy Windows you use semi-colons:
 
-    java -cp jaylib.jar;jaylib-natives.jar;. Demo
+    java -cp jaylib-3.7.0.jar;jaylib-natives-windows-x86_64-3.7.0.jar;. Demo
 
 ## Known issues
 
@@ -76,13 +104,17 @@ To set a field:
 
 Remember each time you do either of those you are accessing native memory.
 
+### Position field
+
+JavaCPP has a field of its own called `position` so it renames the actual position field to `_position`.
+
 ### Constructors
 
-JavaCPP does not generate constructors.  The recommended JavaCPP way is like this:
+JavaCPP does not generate constructors.  The recommended JavaCPP way to initialize a struct is like this:
 
      var vec = new Vector3().x(1).y(2).z(3);
 
-For discussion of other ways, [see here](https://github.com/electronstudio/jaylib/issues/1#issuecomment-873485303).
+Some people do not like this.  For discussion of other ways, [see here](https://github.com/electronstudio/jaylib/issues/1#issuecomment-873485303).
 
 ### Arrays
 
@@ -131,15 +163,11 @@ Run:
 This will build you a jaylib.jar uber-jar and natives jar and run a test.
 
 
-
 ## License
 
 Jaylib is distributed under the GPL license with the Classpath Exception to allow linking, the same as OpenJDK itself, so you can use it
 anywhere that you use the JDK, for both free and non-free ('closed source') projects.
 
-## Tutorials
-
-[Tutorial videos by Odhynth](https://www.youtube.com/watch?v=YhqDrzBMC8E&list=PLjWtYjfP9T98elE35qy67vnZs5_u8Aa83)
 
 ## Performance
 
@@ -155,3 +183,7 @@ and then only convert them to native C data structures when you have to call the
 | Jaylib 3.7 | Java 11         | 39000            | 22%           |
 | Jaylib 3.7 | Java 11 Avoiding native calls         | 64000            | 36%           |
 | Jaylib 3.7 | Java 17 Avoiding native calls         | 73000            | 41%           |
+
+## Tutorials that are probably out of date
+
+[Tutorial videos by Odhynth](https://www.youtube.com/watch?v=YhqDrzBMC8E&list=PLjWtYjfP9T98elE35qy67vnZs5_u8Aa83)
