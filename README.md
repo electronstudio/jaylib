@@ -180,9 +180,11 @@ and then only convert them to native C data structures when you have to call the
 | Library                | Implementation    | Bunnies (60 FPS) | Percentage    |
 | -------------          | -------------     | -------------    | ------------- |
 | Raylib 3.7             | C                 | 180000           | 100%          |
-| Jaylib 3.7 | Java 11         | 39000            | 22%           |
-| Jaylib 3.7 | Java 11 Avoiding native calls         | 64000            | 36%           |
+| [Raylib-J](https://github.com/CreedVI/Raylib-J/) v0.2-alpha           | Java 17                 | 151000           | 84%          |
 | Jaylib 3.7 | Java 17 Avoiding native calls         | 73000            | 41%           |
+| Jaylib 3.7 | Java 11 Avoiding native calls         | 64000            | 36%           |
+| Jaylib 3.7 | Java 11         | 39000            | 22%           |
+| [Kaylib](https://github.com/electronstudio/kaylib) 3.7 | Kotlin native | 28000 | 16% |
 
 ## Tutorials that are probably out of date
 

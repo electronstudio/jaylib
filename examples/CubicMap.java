@@ -12,7 +12,7 @@
 import com.raylib.Jaylib.Vector3;
 import com.raylib.Jaylib.Vector2;
 import com.raylib.Jaylib.Camera;
-import static com.raylib.Jaylib.*;
+import static com.raylib.Raylib.*;
 
 public class CubicMap {
 
