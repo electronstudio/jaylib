@@ -181,11 +181,11 @@ and then only convert them to native C data structures when you have to call the
 | -------------          | -------------     | -------------    | ------------- |
 | Raylib 3.7             | C                 | 180000           | 100%          |
 | [Raylib-J](https://github.com/CreedVI/Raylib-J/) v0.2-alpha           | Java 17                 | 151000           | 84%          |
-| Jaylib 3.7 | Java 17 Avoiding native calls         | 73000            | 41%           |
-| Jaylib 3.7 | Java 11 Avoiding native calls         | 64000            | 36%           |
+| Jaylib 3.7 *| Java 17          | 73000            | 41%           |
+| Jaylib 3.7 *| Java 11         | 64000            | 36%           |
+| Jaylib 3.7 *| Java 11 GraalVM 21.2        | 64000            | 36%           |
 | Jaylib 3.7 | Java 11         | 39000            | 22%           |
+| Jaylib 3.7 * |[GraalVM 21.2 native image](https://github.com/electronstudio/jaylib/issues/26)        | 39000            | 22%           |
 | [Kaylib](https://github.com/electronstudio/kaylib) 3.7 | Kotlin native | 28000 | 16% |
 
-## Tutorials that are probably out of date
-
-[Tutorial videos by Odhynth](https://www.youtube.com/watch?v=YhqDrzBMC8E&list=PLjWtYjfP9T98elE35qy67vnZs5_u8Aa83)
+* I'm using a version of Bunnymark that avoids the most egregious native calls here.
