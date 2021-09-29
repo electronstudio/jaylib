@@ -188,4 +188,4 @@ and then only convert them to native C data structures when you have to call the
 | Jaylib 3.7 * |[GraalVM 21.2 native image](https://github.com/electronstudio/jaylib/issues/26)        | 39000            | 22%           |
 | [Kaylib](https://github.com/electronstudio/kaylib) 3.7 | Kotlin native | 28000 | 16% |
 
-* I'm using a version of Bunnymark that avoids the most egregious native calls here.
+*I'm using a version of Bunnymark that avoids the most egregious native calls here.
