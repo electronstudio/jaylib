@@ -1,0 +1,1 @@
+Examples can now be found at https://github.com/electronstudio/jaylib-example-project
