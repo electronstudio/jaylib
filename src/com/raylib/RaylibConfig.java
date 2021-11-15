@@ -43,18 +43,20 @@ public class RaylibConfig implements InfoMapper {
 
     public void map(InfoMap infoMap) {
         infoMap.put(new Info("!defined(__cplusplus) && !defined(bool)").define(false))
-
+                .put(new Info("!defined(__cplusplus) && !defined(bool) && !defined(RL_BOOL_TYPE)").define(false))
                 .put(new Info("RLAPI").cppText("#define RLAPI"))
                 .put((new Info("raylib.h")
                         .linePatterns("// NOTE: Custom raylib color palette for amazing visuals on WHITE background",
                                 "// Structures Definition").skip()))
-                .put(new Info("FormatText", "SubText", "ShowWindow", "LoadText", "SpriteFont", "GetExtension").cppTypes().annotations())
+                .put(new Info("MOUSE_LEFT_BUTTON","MOUSE_RIGHT_BUTTON","MOUSE_MIDDLE_BUTTON","FormatText",
+                        "SubText", "ShowWindow", "LoadText", "SpriteFont", "GetExtension").cppTypes().annotations())
 
                 .put(new Info("defined(RLGL_STANDALONE)").define(false))
                 //.put(new Info("defined(GRAPHICS_API_OPENGL_ES2)").define(false))
                 .put(new Info("defined(GRAPHICS_API_OPENGL_11)").define(false))
                 .put(new Info("defined(RLGL_IMPLEMENTATION)").define(false))
                 .put(new Info("RMDEF").cppText("#define RMDEF"))
+                .put(new Info("RMAPI").cppText("#define RMAPI"))
                // .put(new Info("GLAD_REALLOC", "GLAD_FREE").cppTypes().annotations())
 
         ;

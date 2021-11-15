@@ -101,19 +101,19 @@ public class Jaylib extends Raylib{
         }
     }
     
-    public static class RayHitInfo extends Raylib.RayHitInfo {
-        public RayHitInfo() {
-            super();   
+    public static class RayCollision extends Raylib.RayCollision {
+        public RayCollision() {
+            super();
         }
-        public RayHitInfo(boolean hit, float distance, Raylib.Vector3 position, Raylib.Vector3 normal) {
+        public RayCollision(boolean hit, float distance, Raylib.Vector3 point, Raylib.Vector3 normal) {
             super();
             hit(hit);
             distance(distance);
-            _position(position);
+            point(point);
             normal(normal);
         }
-        public RayHitInfo(Raylib.RayHitInfo rhi) {
-            this(rhi.hit(), rhi.distance(), rhi._position(), rhi.normal());
+        public RayCollision(Raylib.RayCollision rhi) {
+            this(rhi.hit(), rhi.distance(), rhi.point(), rhi.normal());
         }
     }
     

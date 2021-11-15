@@ -41,7 +41,7 @@ jobs:
 
       - name: Build jaylib
         env:
-          RAYLIB_VERSION: 3.7.0
+          RAYLIB_VERSION: 4.0.0
           RAYLIB_PLATFORM: linux-x86_64
         run: |
           ./build-java.sh
@@ -79,7 +79,7 @@ jobs:
 
       - name: Build jaylib
         env:
-          RAYLIB_VERSION: 3.7.0
+          RAYLIB_VERSION: 4.0.0
           RAYLIB_PLATFORM: macosx-x86_64
         run: |
           ./build-java.sh
