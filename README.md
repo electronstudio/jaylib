@@ -15,7 +15,9 @@ they are auto-generated.  See [How To Build](#how-to-build)
 
 ## Example project
 
-Download [the example project](https://github.com/electronstudio/jaylib-example-project) and import it into IntelliJ or Eclipse to get up and running immediately.
+Download [the Gradle example project](https://github.com/electronstudio/jaylib-example-project) and import it into IntelliJ or Eclipse to get up and running immediately.
+
+([Maven example](https://github.com/electronstudio/jaylib-maven-example-project))
 
 ## How to use with Gradle
 
