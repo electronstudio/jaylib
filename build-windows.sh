@@ -1,7 +1,8 @@
 #!/bin/bash
 export RAYLIB_VERSION=4.0.0
 export RAYLIB_PLATFORM=windows-x86_64
-cp raymath-windows-hacked.h src/com/raylib/raymath.h
+export LINK_PATH="C:\\Users\\Richard\\IdeaProjects\\jaylib4"
+#cp raymath-windows-hacked.h src/com/raylib/raymath.h
 ./build-java.sh
 ./build-native.sh
 # ./build-docs.sh

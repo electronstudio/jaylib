@@ -14,7 +14,14 @@ mv src/com/raylib/RaylibConfig.class gen/com/raylib
 cp *.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MD /LD' -nodelete com/raylib/Raylib.java
+if [ -n "$LINK_PATH" ]; then
+  echo "We are on WINDOWS"
+  sed -i 's/near/closeby/g' com/raylib/raymath.h
+  sed -i 's/far/wayaway/g' com/raylib/raymath.h
+  java -jar ../javacpp.jar -Dplatform.linkpath="$LINK_PATH" -Dplatform.compiler.foo='// /std:c11 /Oi /O2 /EHsc /Gy /GL /MD /LD' -nodelete com/raylib/Raylib.java
+else
+  java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java
+fi
 # /Oi /O2 /MD /LD /link /INCREMENTAL:NO /LTCG /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /NODEFAULTLIB:MSVCRTD'
 if [ $? -ne '0' ]; then
   echo "Fix this before trying again"
