@@ -20,7 +20,7 @@ cd gen
 
 echo "STEP 2 - compile Raylib.java"
 
-java -jar ../javacpp.jar -Dplatform.linkpath="%LINK_PATH%" -Dplatform.compiler.foo="// /Oi /O2 /EHsc /Gy /GL /MD /LD" -nodelete com/raylib/Raylib.java
+java -jar ../javacpp.jar -Dplatform.linkpath="%LINK_PATH%" -Dplatform.compiler.foo="// /Oi /O2 /EHsc /Gy /GL /MD /LD /DVC_EXTRALEAN /DWIN32_LEAN_AND_MEAN" -nodelete com/raylib/Raylib.java
 
 
 cd ..
