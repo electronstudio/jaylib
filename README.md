@@ -153,6 +153,8 @@ Build and install Raylib from the `raylib` directory.
 
 Build just the jaylib-natives.jar:
 
+    set RAYLIB_VERSION=4.0.0
+    set RAYLIB_PLATFORM=windows-x86_64
     build-windows.bat
 
 To build everything including the jaylib.jar you will need git-bash installed.

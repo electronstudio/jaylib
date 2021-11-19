@@ -1,5 +1,3 @@
-set RAYLIB_VERSION=4.0.0
-set RAYLIB_PLATFORM=windows-x86_64
 set LINK_PATH="%CD%"
 
 

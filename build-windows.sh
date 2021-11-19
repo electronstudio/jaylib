@@ -1,4 +1,5 @@
 #!/bin/bash
+# THIS FILE IS FOR TESTING, PRODUCTION BUILDS ONLY USE build-windows.bat
 export RAYLIB_VERSION=4.0.0
 export RAYLIB_PLATFORM=windows-x86_64
 export LINK_PATH="C:\\Users\\Richard\\IdeaProjects\\jaylib4"

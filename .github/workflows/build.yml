@@ -11,6 +11,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  RAYLIB_VERSION: 4.0.0-0
 
 jobs:
   build-linux:
@@ -41,7 +43,6 @@ jobs:
 
       - name: Build jaylib
         env:
-          RAYLIB_VERSION: 4.0.0
           RAYLIB_PLATFORM: linux-x86_64
         run: |
           ./build-java.sh
@@ -79,7 +80,6 @@ jobs:
 
       - name: Build jaylib
         env:
-          RAYLIB_VERSION: 4.0.0
           RAYLIB_PLATFORM: macosx-x86_64
         run: |
           ./build-java.sh
@@ -123,7 +123,6 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build jaylib
         env:
-          RAYLIB_VERSION: 4.0.0
           RAYLIB_PLATFORM: windows-x86_64
         run: |
           build-windows.bat
