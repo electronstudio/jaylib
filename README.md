@@ -13,6 +13,12 @@ See [issues](https://github.com/electronstudio/jaylib/issues).
 If there is a newer version of Raylib out then you can probably re-generate these bindings with little or no changes, because
 they are auto-generated.  See [How To Build](#how-to-build)
 
+## Docs
+
+[Javadocs are here](http://electronstudio.github.io/jaylib) but you will also need to refer to
+[raylib.h](https://github.com/raysan5/raylib/blob/master/src/raylib.h) and Raylib's [cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html)
+and [examples](https://www.raylib.com/examples.html) to learn Raylib.
+
 ## Example project
 
 Download [the Gradle example project](https://github.com/electronstudio/jaylib-example-project) and import it into IntelliJ or Eclipse to get up and running immediately.
