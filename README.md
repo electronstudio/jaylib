@@ -1,4 +1,4 @@
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 3.7
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.0 + RLGL + Raymath
 
 JNI is the fastest kind of native binding for Java, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -125,9 +125,6 @@ of which have an arrays of `maps`.  To access the second map of the first materi
 
     model.materials().position(1).maps().position(2)
 
-### RLGL and Raymath
-
-These additional libraries are included in the Linux and Mac natives but may not work properly in the Windows natives.
 
 ## How to build
 
@@ -136,8 +133,6 @@ These additional libraries are included in the Linux and Mac natives but may not
 We have automated builds on Github Actions.  To build manually, follow the steps in the [build file](https://github.com/electronstudio/jaylib/blob/master/.github/workflows/build.yml)
 
 ### Windows
-
-git-bash needs to to be installed.
 
 Open a Visual C 2019 native x64 command prompt *with admin permissions* so that symlinks work.
 
@@ -156,13 +151,15 @@ Build and install Raylib from the `raylib` directory.
     copy raylib\Release\raylib.lib ..\..
     cd ..\..
 
+Build just the jaylib-natives.jar:
 
-Edit `build-windows`.  Change `LINK_PATH` to the full path to the `jaylib` folder.  (Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work on Windows.)
+    build-windows.bat
 
-Run:
-`build-windows.sh`
+To build everything including the jaylib.jar you will need git-bash installed.
+Edit `build-windows.sh`.  Change `LINK_PATH` to the full path to the `jaylib` folder.
+(Yes, you would think JavaCPP could work this out for itself, or that relative paths could be used, but it seems not to work on Windows.)
 
-This will build you a jaylib.jar uber-jar and natives jar and run a test.
+    build-windows.sh
 
 
 ## License
