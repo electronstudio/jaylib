@@ -18,7 +18,7 @@ if [ -n "$LINK_PATH" ]; then
   echo "We are on WINDOWS"
   sed -i 's/near/closeby/g' com/raylib/raymath.h
   sed -i 's/far/wayaway/g' com/raylib/raymath.h
-  java -jar ../javacpp.jar -Dplatform.linkpath="$LINK_PATH" -Dplatform.compiler.foo='// /std:c11 /Oi /O2 /EHsc /Gy /GL /MD /LD' -nodelete com/raylib/Raylib.java
+  java -jar ../javacpp.jar -Dplatform.linkpath="$LINK_PATH" -Dplatform.compiler.foo='// /Oi /O2 /EHsc /Gy /GL /MD /LD' -nodelete com/raylib/Raylib.java
 else
   java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java
 fi

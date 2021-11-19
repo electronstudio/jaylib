@@ -90,3 +90,46 @@ jobs:
         with:
           name: jar
           path: ./*macosx-x86_64*.jar
+
+  build-windows:
+    runs-on: windows-2019
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: '8'
+
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          msbuild raylib.sln /target:raylib /property:Configuration=Release
+          copy raylib\Release\raylib.lib ..\..
+          cd ..\..
+        shell: cmd
+
+      - name: Build jaylib
+        env:
+          RAYLIB_VERSION: 4.0.0
+          RAYLIB_PLATFORM: windows-x86_64
+        run: |
+          build-windows.bat
+        shell: cmd
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: jar
+          path: ./*.jar
