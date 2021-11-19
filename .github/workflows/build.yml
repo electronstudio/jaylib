@@ -120,6 +120,7 @@ jobs:
           cd ..\..
         shell: cmd
 
+      - uses: ilammy/msvc-dev-cmd@v1
       - name: Build jaylib
         env:
           RAYLIB_VERSION: 4.0.0
