@@ -314,8 +314,8 @@ static unsigned int usedMemory = 0;                         // Total allocated d
 #if !defined(PHYSAC_AVOID_TIMMING_SYSTEM)
 // Timming measure functions
 static void InitTimerHiRes(void);                                                                           // Initializes hi-resolution MONOTONIC timer
-static unsigned long long int GetClockTicks(void);                                                          // Get hi-res MONOTONIC time measure in mseconds
-static double GetCurrentTime(void);                                                                         // Get current time measure in milliseconds
+static unsigned long long int PH_GetClockTicks(void);                                                          // Get hi-res MONOTONIC time measure in mseconds
+static double PH_GetCurrentTime(void);                                                                         // Get current time measure in milliseconds
 #endif
 
 static void UpdatePhysicsStep(void);                                                                        // Update physics step (dynamics, collisions and position corrections)
@@ -915,7 +915,7 @@ void UpdatePhysics(void)
     static double deltaTimeAccumulator = 0.0;
 
     // Calculate current time (ms)
-    currentTime = GetCurrentTime();
+    currentTime = PH_GetCurrentTime();
 
     // Calculate current delta time (ms)
     const double delta = currentTime - startTime;
@@ -964,12 +964,12 @@ static void InitTimerHiRes(void)
     frequency = (timebase.denom*1e9)/timebase.numer;
 #endif
 
-    baseClockTicks = (double)GetClockTicks();      // Get MONOTONIC clock time offset
-    startTime = GetCurrentTime();                  // Get current time in milliseconds
+    baseClockTicks = (double)PH_GetClockTicks();      // Get MONOTONIC clock time offset
+    startTime = PH_GetCurrentTime();                  // Get current time in milliseconds
 }
 
 // Get hi-res MONOTONIC time measure in clock ticks
-static unsigned long long int GetClockTicks(void)
+static unsigned long long int PH_GetClockTicks(void)
 {
     unsigned long long int value = 0;
 
@@ -991,9 +991,9 @@ static unsigned long long int GetClockTicks(void)
 }
 
 // Get current time in milliseconds
-static double GetCurrentTime(void)
+static double PH_GetCurrentTime(void)
 {
-    return (double)(GetClockTicks() - baseClockTicks)/frequency*1000;
+    return (double)(PH_GetClockTicks() - baseClockTicks)/frequency*1000;
 }
 #endif // !PHYSAC_AVOID_TIMMING_SYSTEM
 
