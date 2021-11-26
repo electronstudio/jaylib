@@ -950,7 +950,7 @@ void SetPhysicsTimeStep(double delta)
 static void InitTimerHiRes(void)
 {
 #if defined(_WIN32)
-    QueryPerformanceFrequency((unsigned long long int *) &frequency);
+    QueryPerformanceFrequency((LARGE_INTEGER *) &frequency);
 #endif
 
 #if defined(__EMSCRIPTEN__) || defined(__linux__)
