@@ -1,4 +1,4 @@
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.0 + RLGL + Raymath
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.0 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -24,6 +24,12 @@ and [examples](https://www.raylib.com/examples.html) to learn Raylib.
 Download [the Gradle example project](https://github.com/electronstudio/jaylib-example-project) and import it into IntelliJ or Eclipse to get up and running immediately.
 
 ([Maven example](https://github.com/electronstudio/jaylib-maven-example-project))
+
+## Video tutorials
+
+[Getting started with IntelliJ](https://www.youtube.com/watch?v=_xuFjU7YZ4s)
+
+[Getting started with Eclipse](https://www.youtube.com/watch?v=3DrCWtDTI6o)
 
 ## How to use with Gradle
 
