@@ -974,7 +974,7 @@ static unsigned long long int PH_GetClockTicks(void)
     unsigned long long int value = 0;
 
 #if defined(_WIN32)
-    QueryPerformanceCounter((unsigned long long int *) &value);
+    QueryPerformanceCounter((LARGE_INTEGER *) &value);
 #endif
 
 #if defined(__linux__)
