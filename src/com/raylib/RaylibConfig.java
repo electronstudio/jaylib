@@ -12,7 +12,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 @Platform(
                         value = {"windows-x86_64"},
                         link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h"},
                         compiler = {"!default","foo"}
                 ),
                 @Platform(
@@ -20,7 +20,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         //linkpath = {"."},
                         link = {"raylib"},
                         //includepath = {"/Users/richard/IdeaProjects/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h"}
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h"},
+                        compiler = {"!default","foo"}
                 ),
 
                 @Platform(
@@ -28,7 +29,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         linkpath = {"/usr/lib/x86_64-linux-gnu"}, // "/home/richard/jaylib/lib/linux"
                         link = {"X11", "raylib"},
                         //includepath = {"/home/richard/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h"}
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h"},
+                        compiler = {"!default","foo"}
                 )},
 
         target = "com.raylib.Raylib"
@@ -53,6 +55,8 @@ public class RaylibConfig implements InfoMapper {
                 .put(new Info("defined(RLGL_IMPLEMENTATION)").define(false))
                 .put(new Info("RMDEF").cppText("#define RMDEF"))
                 .put(new Info("RMAPI").cppText("#define RMAPI"))
+                .put(new Info("PHYSACDEF").cppText("#define PHYSACDEF"))
+                .put(new Info("defined(PHYSAC_IMPLEMENTATION)").define(false))
                // .put(new Info("GLAD_REALLOC", "GLAD_FREE").cppTypes().annotations())
 
         ;
