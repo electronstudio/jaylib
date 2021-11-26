@@ -248,8 +248,8 @@ PHYSACDEF Vector2 GetPhysicsShapeVertex(PhysicsBody* body, int vertex);         
         extern "C" {        // Prevents name mangling of functions
         #endif
         // Functions required to query time on Windows
-        int __stdcall QueryPerformanceCounter(unsigned long long int *lpPerformanceCount);
-        int __stdcall QueryPerformanceFrequency(unsigned long long int *lpFrequency);
+        //int __stdcall QueryPerformanceCounter(unsigned long long int *lpPerformanceCount);
+        //int __stdcall QueryPerformanceFrequency(unsigned long long int *lpFrequency);
         #if defined(__cplusplus)
         }
         #endif
