@@ -31,7 +31,18 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         //includepath = {"/home/richard/jaylib"},
                         include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
                         compiler = {"!default","foo"}
+                ),
+
+                @Platform(
+                        value = {"linux-arm"},
+                        linkpath = {"/usr/lib/arm-linux-gnueabihf/"},
+                        link = {"X11", "raylib"},
+                        //includepath = {"/home/richard/jaylib"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
+                        compiler = {"!default","foo"}
                 )},
+
+
 
         target = "com.raylib.Raylib"
         //helper = "com.raylib.Colors"
