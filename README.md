@@ -142,6 +142,10 @@ of which have an arrays of `maps`.  To access the second map of the first materi
 
 ### Linux and Mac
 
+Clone this repo including submodules so you get correct version of Raylib.
+
+git clone --recurse-submodules  https://github.com/electronstudio/jaylib
+
 We have automated builds on Github Actions.  To build manually, follow the steps in the [build file](https://github.com/electronstudio/jaylib/blob/master/.github/workflows/build.yml)
 
 ### Windows
