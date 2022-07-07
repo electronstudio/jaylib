@@ -37,7 +37,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -72,15 +72,19 @@ jobs:
           java-version: '8'
 
 
+      #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
         run: |
-          cd raylib
+          cd raylib-c
           mkdir build
           cd build
-          cmake -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DBUILD_EXAMPLES=off -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
-          sudo cp ../src/extras/* /usr/local/include/
+      - name: Copy extras
+        run: |
+          sudo cp physac/src/physac.h /usr/local/include/
+          sudo cp raygui/src/raygui.h /usr/local/include/
 
       - name: Build jaylib
         env:
@@ -118,7 +122,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
