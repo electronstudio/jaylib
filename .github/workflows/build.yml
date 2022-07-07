@@ -75,7 +75,7 @@ jobs:
       #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
         run: |
-          cd raylib-c
+          cd raylib
           mkdir build
           cd build
           cmake -DBUILD_EXAMPLES=off -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
