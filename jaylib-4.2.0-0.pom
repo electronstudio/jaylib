@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>jaylib</name>
-    <description>A demo for deployment to the Central Repository via OSSRH</description>
+    <description>JNI bindings for Raylib</description>
     <url>https://github.com/electronstudio/jaylib/</url>
 
     <licenses>
