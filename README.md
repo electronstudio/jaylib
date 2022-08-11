@@ -105,15 +105,15 @@ public class Demo {
 
 Compile it:
 
-    javac -cp jaylib-4.2.0-0.jar Demo.java
+    javac -cp jaylib-4.2.0-1.jar Demo.java
     
 Run it:
 
-    java -cp jaylib-4.2.0-0.jar:. Demo
+    java -cp jaylib-4.2.0-1.jar:. Demo
     
 On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib-4.2.0-0.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-4.2.0-1.jar:. Demo
     
 On weirdy Windows you use semi-colons:
 
