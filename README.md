@@ -1,4 +1,4 @@
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.2 + RLGL + Raymath + Physac + RayGui
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.5.0 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -46,7 +46,7 @@ Download [the Gradle example project](https://github.com/electronstudio/jaylib-e
 ```
 
 dependencies {
-    implementation 'uk.co.electronstudio.jaylib:jaylib:4.2.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib:4.5.0'
 }
 
 ```
@@ -105,19 +105,19 @@ public class Demo {
 
 Compile it:
 
-    javac -cp jaylib-4.2.0-1.jar Demo.java
+    javac -cp jaylib-4.5.0.jar Demo.java
     
 Run it:
 
-    java -cp jaylib-4.2.0-1.jar:. Demo
+    java -cp jaylib-4.5.0.jar:. Demo
     
 On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib-4.2.0-1.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-4.5.0.jar:. Demo
     
 On weirdy Windows you use semi-colons:
 
-    java -cp jaylib-4.2.0-0.jar;. Demo
+    java -cp jaylib-4.5.0.jar;. Demo
 
 ## Known issues
 
