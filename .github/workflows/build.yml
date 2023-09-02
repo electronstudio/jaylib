@@ -12,11 +12,11 @@ on:
   workflow_dispatch:
 
 env:
-  RAYLIB_VERSION: 4.2.0-1
+  RAYLIB_VERSION: 4.5.0
 
 jobs:
   build-linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -34,10 +34,11 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
+          cp configoverride.h raylib/src/config.h
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DBUILD_EXAMPLES=OFF -D INCLUDE_EVERYTHING=ON -D SUPPORT_FILEFORMAT_JPG=ON -D WITH_PIC=ON -D CMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -55,37 +56,38 @@ jobs:
           name: jar
           path: ./*.jar
 
-  build-linux-arm:
-    runs-on: rpi
-
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-
-      - name: Build raylib
-        run: |
-          cd raylib
-          mkdir build
-          cd build
-          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release -DOpenGL_GL_PREFERENCE=GLVND ..
-          make -j2
-          make install
-
-      - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: linux-armhf
-        run: |
-          ./build-java.sh
-          ./build-native.sh
-
-      - name: Upload jar
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: jar
-          path: ./*.jar
+#  build-linux-arm:
+#    runs-on: rpi
+#
+#    steps:
+#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#
+#
+#      - name: Build raylib
+#        run: |
+#          cp configoverride.h raylib/src/config.h
+#          cd raylib
+#          mkdir build
+#          cd build
+#          cmake -DBUILD_EXAMPLES=OFF -D INCLUDE_EVERYTHING=ON -D SUPPORT_FILEFORMAT_JPG=ON -D WITH_PIC=ON -D CMAKE_BUILD_TYPE=Release -D OpenGL_GL_PREFERENCE=GLVND ..
+#          make -j2
+#          make install
+#
+#      - name: Build jaylib
+#        env:
+#          RAYLIB_PLATFORM: linux-armhf
+#        run: |
+#          ./build-java.sh
+#          ./build-native.sh
+#
+#      - name: Upload jar
+#        uses: actions/upload-artifact@v2.2.4
+#        with:
+#          name: jar
+#          path: ./*.jar
 
 
   build-mac:
@@ -108,10 +110,11 @@ jobs:
       #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
         run: |
+          cp configoverride.h raylib/src/config.h
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=off -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -D BUILD_EXAMPLES=OFF -D CMAKE_OSX_ARCHITECTURES="arm64;x86_64" -D INCLUDE_EVERYTHING=ON -D SUPPORT_FILEFORMAT_JPG=ON -D WITH_PIC=ON -D CMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -149,10 +152,11 @@ jobs:
 
       - name: Build raylib
         run: |
+          cp configoverride.h raylib/src/config.h
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release ..
+          cmake -D BUILD_EXAMPLES=OFF -D INCLUDE_EVERYTHING=ON -D SUPPORT_FILEFORMAT_JPG=ON -D WITH_PIC=ON -D CMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
