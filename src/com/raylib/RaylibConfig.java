@@ -23,7 +23,14 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
                         compiler = {"!default","foo"}
                 ),
-
+                @Platform(
+                        value = {"macosx-arm64"},
+                        //linkpath = {"."},
+                        link = {"raylib"},
+                        //includepath = {"/Users/richard/IdeaProjects/jaylib"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
+                        compiler = {"!default","foo"}
+                ),
                 @Platform(
                         value = {"linux-x86_64"},
                         linkpath = {"/usr/lib/x86_64-linux-gnu"}, // "/home/richard/jaylib/lib/linux"
