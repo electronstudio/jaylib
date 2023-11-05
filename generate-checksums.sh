@@ -3,6 +3,8 @@
 rm javacpp.jar
 jar xf jaylib-natives-macosx-x86_64-*.jar
 rm jaylib-natives-macosx-x86_64-*.jar
+jar xf jaylib-natives-macosx-arm64-*.jar
+rm jaylib-natives-macosx-arm64-*.jar
 jar xf jaylib-natives-linux-x86_64-*.jar
 rm jaylib-natives-linux-x86_64-*.jar
 jar xf jaylib-natives-windows-x86_64-*.jar
