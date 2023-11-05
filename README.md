@@ -85,10 +85,11 @@ public class Demo {
                 .target(new Vector3())
                 .up(new Vector3().x(0).y(1).z(0))
                 .fovy(45).projection(CAMERA_PERSPECTIVE);
-        SetCameraMode(camera, CAMERA_ORBITAL);
+        // Add this line only if Raylib version < 4.5:
+        // SetCameraMode(camera, CAMERA_ORBITAL);
 
         while (!WindowShouldClose()) {
-            UpdateCamera(camera);
+            UpdateCamera(camera, CAMERA_ORBITAL);
             BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode3D(camera);

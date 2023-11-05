@@ -6,7 +6,7 @@
 
     <groupId>uk.co.electronstudio.jaylib</groupId>
     <artifactId>jaylib</artifactId>
-    <version>4.2.0-1</version>
+    <version>4.5.0-0</version>
     <packaging>jar</packaging>
 
     <name>jaylib</name>

@@ -19,13 +19,10 @@ public class Test {
         Mesh mesh = GenMeshHeightmap(image, new Vector3().x(16).y(8).z(16));
         Model model = LoadModelFromMesh(mesh);
         model.materials().maps().position(0).texture(texture);
-
-
         UnloadImage(image);
-        SetCameraMode(camera, CAMERA_ORBITAL);
 
         while(!WindowShouldClose()){
-            UpdateCamera(camera);
+            UpdateCamera(camera, CAMERA_ORBITAL);
             BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode3D(camera);
