@@ -210,15 +210,18 @@ and then only convert them to native C data structures when you have to call the
 
 ### Bunnymark
 
-| Library                | Implementation    | Bunnies (60 FPS) | Percentage    |
-| -------------          | -------------     | -------------    | ------------- |
-| Raylib 3.7             | C                 | 180000           | 100%          |
-| [Raylib-J](https://github.com/CreedVI/Raylib-J/) v0.2-alpha           | Java 17                 | 151000           | 84%          |
-| Jaylib 3.7 *| Java 17          | 73000            | 41%           |
-| Jaylib 3.7 *| Java 11         | 64000            | 36%           |
-| Jaylib 3.7 *| Java 11 GraalVM 21.2        | 64000            | 36%           |
-| Jaylib 3.7 | Java 11         | 39000            | 22%           |
-| Jaylib 3.7 * |[GraalVM 21.2 native image](https://github.com/electronstudio/jaylib/issues/26)        | 39000            | 22%           |
-| [Kaylib](https://github.com/electronstudio/kaylib) 3.7 | Kotlin native | 28000 | 16% |
+| Library                                                     | Implementation                                                                  | Bunnies (60 FPS) | Percentage |
+|-------------------------------------------------------------|---------------------------------------------------------------------------------|-----------------|------------|
+| Raylib 5.0                                                  | C                                                                               | 180000          | 100%       |
+| [Raylib-J](https://github.com/CreedVI/Raylib-J/) v0.2-alpha | Java 17                                                                         | 151000          | 84%        |
+| [Raylib-J](https://github.com/CreedVI/Raylib-J/) v0.5       | Java 22                                                                         | 146000          | 81%        |
+| Foreign Function and Memory API                             | Java 22                                                                         | 150000          | 83%        |
+| Jaylib 5.0 *                                                | Java 22                                                                         | 118000          | 65%        |
+| Jaylib 3.7 *                                                | Java 17                                                                         | 73000           | 41%        |
+| Jaylib 3.7 *                                                | Java 11                                                                         | 64000           | 36%        |
+| Jaylib 3.7 *                                                | Java 11 GraalVM 21.2                                                            | 64000           | 36%        |
+| Jaylib 3.7                                                  | Java 11                                                                         | 39000           | 22%        |
+| Jaylib 3.7 *                                                | [GraalVM 21.2 native image](https://github.com/electronstudio/jaylib/issues/26) | 39000           | 22%        |
+| [Kaylib](https://github.com/electronstudio/kaylib) 3.7      | Kotlin native                                                                   | 28000           | 16%        |
 
 *I'm using a version of Bunnymark that avoids the most egregious native calls here.
