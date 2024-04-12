@@ -225,3 +225,7 @@ and then only convert them to native C data structures when you have to call the
 | [Kaylib](https://github.com/electronstudio/kaylib) 3.7      | Kotlin native                                                                   | 28000           | 16%        |
 
 *I'm using a version of Bunnymark that avoids the most egregious native calls here.
+
+## See also
+
+[LibRLImg](https://codeberg.org/glowiak/librlimg) - load Textures and Images from jarfile resources
