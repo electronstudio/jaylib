@@ -1,4 +1,4 @@
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 4.5 + RLGL + Raymath + Physac + RayGui
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.0 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -15,7 +15,7 @@ they are auto-generated.  See [How To Build](#how-to-build)
 
 ## Platforms
 
-4.5 release includes binaries for:
+4.5+ release includes binaries for:
 * Windows x86_64
 * Macos x86_64
 * Macos ARM64
@@ -46,7 +46,7 @@ Download [the Gradle example project](https://github.com/electronstudio/jaylib-e
 ```
 
 dependencies {
-    implementation 'uk.co.electronstudio.jaylib:jaylib:4.5.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib:5.0.+'
 }
 
 ```
@@ -59,7 +59,7 @@ dependencies {
         <dependency>
             <groupId>uk.co.electronstudio.jaylib</groupId>
             <artifactId>jaylib</artifactId>
-            <version>[4.5.0,4.6)</version>
+            <version>[5.0.0,5.1)</version>
         </dependency>
     </dependencies>
 
@@ -106,19 +106,19 @@ public class Demo {
 
 Compile it:
 
-    javac -cp jaylib-4.5.0-0.jar Demo.java
+    javac -cp jaylib-5.0.0-0.jar Demo.java
     
 Run it:
 
-    java -cp jaylib-4.5.0-0.jar:. Demo
+    java -cp jaylib-5.0.0-0.jar:. Demo
     
 On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib-4.5.0-0.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-5.0.0-0.jar:. Demo
     
 On weirdy Windows you use semi-colons:
 
-    java -cp jaylib-4.5.0-0.jar;. Demo
+    java -cp jaylib-5.0.0-0.jar;. Demo
 
 ## Known issues
 
