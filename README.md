@@ -1,6 +1,10 @@
+# New!
+
+Take a look at [Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) a Java FFM Raylib binding.
+
 # Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.0 + RLGL + Raymath + Physac + RayGui
 
-JNI is the fastest kind of native binding for Java, but is difficult to write.  Therefore
+JNI is the fastest kind of native binding for Java 8+, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
 The results are not quite as Java-like
 as you would get from a hand-written binding, but they are not bad, and should be easy to keep up to date
@@ -229,3 +233,7 @@ and then only convert them to native C data structures when you have to call the
 ## See also
 
 [LibRLImg](https://codeberg.org/glowiak/librlimg) - load Textures and Images from jarfile resources
+
+[Megabunny](https://github.com/electronstudio/megabunny) - Raylib benchmarks
+
+[Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) - Java FFM Raylib binding
