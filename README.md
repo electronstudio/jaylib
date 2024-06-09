@@ -237,3 +237,5 @@ and then only convert them to native C data structures when you have to call the
 [Megabunny](https://github.com/electronstudio/megabunny) - Raylib benchmarks
 
 [Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) - Java FFM Raylib binding
+
+[jlImGui](https://github.com/violent-studio/jlImGui) - ImGui binding for Jaylib
