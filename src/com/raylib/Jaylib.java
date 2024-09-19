@@ -53,6 +53,16 @@ public class Jaylib extends Raylib{
         }
     }
 
+    public static class Camera2D extends Raylib.Camera2D{
+        public Camera2D(Raylib.Vector2 position, Raylib.Vector2 target, float rotation, float zoom) {
+            super();
+            _position(position);
+            target(target);
+            rotation(rotation);
+            zoom(zoom);
+        }
+    }
+
     public Raylib.Rectangle Rectangle(float x, float y, float width, float height) {
         return new Raylib.Rectangle().x(x).y(y).width(width).height(height);
     }
