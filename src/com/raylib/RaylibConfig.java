@@ -16,6 +16,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         compiler = {"!default","foo"}
                 ),
                 @Platform(
+                        value = {"windows-x86"},
+                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"},
+                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
+                        compiler = {"!default","foo"}
+                        ),
+                @Platform(
                         value = {"macosx-x86_64"},
                         //linkpath = {"."},
                         link = {"raylib"},
