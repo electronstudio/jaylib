@@ -50,7 +50,7 @@ jobs:
           ./build-docs.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.2.1
         with:
           name: jar
           path: ./*.jar
@@ -124,7 +124,7 @@ jobs:
           ./build-native.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.2.1
         with:
           name: jar
           path: ./*macosx-x86_64*.jar
@@ -167,7 +167,7 @@ jobs:
         shell: cmd
 
       - name: Upload jar
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.2.1
         with:
           name: jar
           path: ./*.jar
