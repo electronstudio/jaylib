@@ -32,6 +32,13 @@ public class Jaylib extends Raylib{
         return new Raylib.Color().r((byte) r).g((byte) g).b((byte) b).a((byte) a);
     }
 
+    public static Jaylib.Vector2 rVector2ToJVector2(Raylib.Vector2 vect) {
+        return new Jaylib.Vector2(vect.x, vect.y);
+    }
+
+    public static Raylib.Vector2 jVector2ToRVector2(Jaylib.Vector2 vect) {
+        return new Raylib.Vector2().x(vect.x()).y(vect.y());
+    }
     public static class Color extends Raylib.Color{
         public Color(int r, int g, int b, int a){
             super();
