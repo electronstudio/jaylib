@@ -62,9 +62,9 @@ public class Jaylib extends Raylib{
     }
 
     public static class Camera2D extends Raylib.Camera2D{
-        public Camera2D(Raylib.Vector2 position, Raylib.Vector2 target, float rotation, float zoom) {
+        public Camera2D(Raylib.Vector2 offset, Raylib.Vector2 target, float rotation, float zoom) {
             super();
-            _position(position);
+            offset(offset);
             target(target);
             rotation(rotation);
             zoom(zoom);
