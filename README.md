@@ -2,7 +2,12 @@
 
 Take a look at [Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) a Java FFM Raylib binding.
 
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.0 + RLGL + Raymath + Physac + RayGui
+The com.raylib.Jaylib class has been removed because it seemed to confuse people and IDE
+autocompletion.  Use com.raylib.Raylib instead.  The Colors are now in com.raylib.Colors.
+If you don't like the fluent constructor syntax of JavaCPP, use the methods in com.raylib.Helpers
+to create structs.
+
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.5 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java 8+, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
