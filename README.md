@@ -19,13 +19,12 @@ they are auto-generated.  See [How To Build](#how-to-build)
 
 ## Platforms
 
-4.5+ release includes binaries for:
+5.5+ release includes binaries for:
 * Windows x86_64
 * Macos x86_64
 * Macos ARM64
 * Linux x86_64
-
-The 4.2 release included Linux ARM64 for Raspberry Pi, but I no longer have a Pi on which to build them.
+* Linux ARM64 (Raspberry Pi Bullseye, 64 bit only, untested)
 
 ## Docs
 
