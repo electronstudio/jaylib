@@ -28,7 +28,7 @@ mac_task:
 
 pi_task:
   arm_container:
-    - image: dtcooper/raspberrypi-os:python-bullseye
+    image: dtcooper/raspberrypi-os:python-bullseye
   env:
     RAYLIB_PLATFORM: linux-arm64
     RAYLIB_VERSION: 5.0.0-0
