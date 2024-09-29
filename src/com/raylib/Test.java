@@ -1,9 +1,8 @@
 package com.raylib;
 
-import com.raylib.Jaylib.*;
-
-import static com.raylib.Jaylib.*;
-
+import static com.raylib.Raylib.*;
+import static com.raylib.Colors.*;
+import static com.raylib.Helpers.*;
 
 public class Test {
     public static void main(String args[]) {
@@ -12,7 +11,16 @@ public class Test {
 
         System.out.println("RLGL TEST: "+rlGetVersion());
 
-        Camera camera = new Camera(new Vector3(18,16,18),new Vector3(), new Vector3(0,1,0), 45, 0);
+//        Camera3D camera = new Camera3D()._position(new Vector3().x(18).y(16).z(18))
+//                                    .target(new Vector3())
+//                                    .up(new Vector3().x(0).y(1).z(0))
+//                                    .fovy(45)
+//                                    .projection(0);
+
+        Camera3D camera = createCamera(makeVector3(18,16,18),
+                new Vector3(),
+                new Vector3().x(0).y(1).z(0),
+                45, 0);
 
         Image image = LoadImage("examples/models/resources/heightmap.png");
         Texture texture = LoadTextureFromImage(image);
@@ -26,14 +34,14 @@ public class Test {
             BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode3D(camera);
-            DrawModel(model, new Vector3(-8,0,-8), 1, RED);
+            DrawModel(model, new Vector3().x(-8).y(0).z(-8), 1, RED);
             DrawGrid(20, 1.0f);
             EndMode3D();
             DrawText("Hello world", 190, 200, 20, VIOLET);
             DrawFPS(20, 20);
             EndDrawing();
         }
-        Raylib.CloseWindow();
+        CloseWindow();
     }
 
 

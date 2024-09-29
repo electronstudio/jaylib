@@ -67,7 +67,7 @@ dependencies {
         <dependency>
             <groupId>uk.co.electronstudio.jaylib</groupId>
             <artifactId>jaylib</artifactId>
-            <version>[5.0.0,5.1)</version>
+            <version>[5.5.0,5.6)</version>
         </dependency>
     </dependencies>
 
@@ -80,8 +80,7 @@ Download the latest `jaylib.jar` from [releases](https://github.com/electronstud
 Write a demo program, e.g. Demo.java
 
 ```java
-import static com.raylib.Jaylib.RAYWHITE;
-import static com.raylib.Jaylib.VIOLET;
+import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 public class Demo {
@@ -114,19 +113,19 @@ public class Demo {
 
 Compile it:
 
-    javac -cp jaylib-5.0.0-0.jar Demo.java
+    javac -cp jaylib-5.5.0-0.jar Demo.java
     
 Run it:
 
-    java -cp jaylib-5.0.0-0.jar:. Demo
+    java -cp jaylib-5.5.0-0.jar:. Demo
     
 On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib-5.0.0-0.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-5.5.0-0.jar:. Demo
     
 On weirdy Windows you use semi-colons:
 
-    java -cp jaylib-5.0.0-0.jar;. Demo
+    java -cp jaylib-5.5.0-0.jar;. Demo
 
 ## Known issues
 
