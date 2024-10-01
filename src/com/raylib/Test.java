@@ -17,7 +17,7 @@ public class Test {
 //                                    .fovy(45)
 //                                    .projection(0);
 
-        Camera3D camera = createCamera(makeVector3(18,16,18),
+        Camera3D camera = createCamera(createVector3(18,16,18),
                 new Vector3(),
                 new Vector3().x(0).y(1).z(0),
                 45, 0);
