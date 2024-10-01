@@ -100,14 +100,14 @@ public final class Helpers {
     }
 
 
-    public static Raylib.Vector3 makeVector3(float x, float y, float z) {
+    public static Raylib.Vector3 createVector3(float x, float y, float z) {
         return new Raylib.Vector3()
                 .x(x)
                 .y(y)
                 .z(z);
     }
 
-    public static Raylib.Vector3 makeVector3(Raylib.Vector3 vector3) {
+    public static Raylib.Vector3 createVector3(Raylib.Vector3 vector3) {
         return new Raylib.Vector3()
                 .x(vector3.x())
                 .y(vector3.y())
@@ -115,13 +115,13 @@ public final class Helpers {
     }
 
 
-    public static Raylib.Vector2 makeVector2(float x, float y) {
+    public static Raylib.Vector2 createVector2(float x, float y) {
         return new Raylib.Vector2()
                 .x(x)
                 .y(y);
     }
 
-    public static Raylib.Vector2 makeVector2(Raylib.Vector2 vector2) {
+    public static Raylib.Vector2 createVector2(Raylib.Vector2 vector2) {
         return new Raylib.Vector2()
                 .x(vector2.x())
                 .y(vector2.y());
