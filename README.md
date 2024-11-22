@@ -80,8 +80,7 @@ Download the latest `jaylib.jar` from [releases](https://github.com/electronstud
 Write a demo program, e.g. Demo.java
 
 ```java
-import static com.raylib.Jaylib.RAYWHITE;
-import static com.raylib.Jaylib.VIOLET;
+import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 public class Demo {
