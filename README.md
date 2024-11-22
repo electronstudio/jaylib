@@ -1,8 +1,13 @@
-# New!
+# News
 
-Take a look at [Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) a Java FFM Raylib binding.
+* Take a look at [Jaylib-FFM](https://github.com/electronstudio/jaylib-ffm) a Java FFM Raylib binding.
 
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.0 + RLGL + Raymath + Physac + RayGui
+* The `com.raylib.Jaylib` class has been removed because it seemed to confuse people and IDE
+autocompletion.  Use `com.raylib.Raylib` instead.  The Colors are now in `com.raylib.Colors`.
+If you don't like the fluent constructor syntax of JavaCPP, use the methods in `com.raylib.Helpers`
+to create structs.
+
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 5.5 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java 8+, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -49,7 +54,7 @@ Download [the Gradle example project](https://github.com/electronstudio/jaylib-e
 ```
 
 dependencies {
-    implementation 'uk.co.electronstudio.jaylib:jaylib:5.0.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib:5.5.+'
 }
 
 ```
@@ -62,7 +67,7 @@ dependencies {
         <dependency>
             <groupId>uk.co.electronstudio.jaylib</groupId>
             <artifactId>jaylib</artifactId>
-            <version>[5.0.0,5.1)</version>
+            <version>[5.5.0,5.6)</version>
         </dependency>
     </dependencies>
 
@@ -75,8 +80,7 @@ Download the latest `jaylib.jar` from [releases](https://github.com/electronstud
 Write a demo program, e.g. Demo.java
 
 ```java
-import static com.raylib.Jaylib.RAYWHITE;
-import static com.raylib.Jaylib.VIOLET;
+import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 public class Demo {
@@ -109,19 +113,19 @@ public class Demo {
 
 Compile it:
 
-    javac -cp jaylib-5.0.0-0.jar Demo.java
+    javac -cp jaylib-5.5.0-0.jar Demo.java
     
 Run it:
 
-    java -cp jaylib-5.0.0-0.jar:. Demo
+    java -cp jaylib-5.5.0-0.jar:. Demo
     
 On MacOS you need this additional option:
 
-    java -XstartOnFirstThread -cp jaylib-5.0.0-0.jar:. Demo
+    java -XstartOnFirstThread -cp jaylib-5.5.0-0.jar:. Demo
     
 On weirdy Windows you use semi-colons:
 
-    java -cp jaylib-5.0.0-0.jar;. Demo
+    java -cp jaylib-5.5.0-0.jar;. Demo
 
 ## Known issues
 
@@ -147,7 +151,7 @@ JavaCPP does not generate constructors.  The recommended JavaCPP way to initiali
 
      var vec = new Vector3().x(1).y(2).z(3);
 
-Some people do not like this.  For discussion of other ways, [see here](https://github.com/electronstudio/jaylib/issues/1#issuecomment-873485303).
+Some people do not like this.  You can use helper functions, e.g. `com.raylib.Helpers.createVector3(1,2,3)`. For discussion [see here](https://github.com/electronstudio/jaylib/issues/1#issuecomment-873485303).
 
 ### Arrays
 
