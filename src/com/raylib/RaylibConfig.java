@@ -8,64 +8,46 @@ import org.bytedeco.javacpp.tools.InfoMapper;
 
 @Properties(
         value = {
-
                 @Platform(
-                        value = {"windows-x86_64"},
-                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"},
                         include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
                         compiler = {"!default","foo"}
+                ),
+                @Platform(
+                        value = {"windows-x86_64"},
+                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"}
                 ),
                 @Platform(
                         value = {"windows-x86"},
-                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"winmm", "OpenGL32","user32","shell32","gdi32","raylib"}
                         ),
                 @Platform(
                         value = {"macosx-x86_64"},
-                        //linkpath = {"."},
-                        link = {"raylib"},
-                        //includepath = {"/Users/richard/IdeaProjects/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"raylib"}
                 ),
                 @Platform(
                         value = {"macosx-arm64"},
-                        //linkpath = {"."},
-                        link = {"raylib"},
-                        //includepath = {"/Users/richard/IdeaProjects/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"raylib"}
                 ),
                 @Platform(
                         value = {"linux-x86_64"},
                         linkpath = {"/usr/lib/x86_64-linux-gnu"}, // "/home/richard/jaylib/lib/linux"
-                        link = {"X11", "raylib"},
-                        //includepath = {"/home/richard/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"X11", "raylib"}
                 ),
                 @Platform(
                         value = {"linux-arm64"},
                         linkpath = {"/usr/lib/aarch64-linux-gnu/"},
-                        link = {"X11", "raylib"},
-                        //includepath = {"/home/richard/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"X11", "raylib"}
                 ),
                 @Platform(
                         value = {"linux-arm"},
                         linkpath = {"/usr/lib/arm-linux-gnueabihf/"},
-                        link = {"X11", "raylib"},
-                        //includepath = {"/home/richard/jaylib"},
-                        include = {"raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h"},
-                        compiler = {"!default","foo"}
+                        link = {"X11", "raylib"}
                 )},
 
 
 
         target = "com.raylib.Raylib"
-        //helper = "com.raylib.Colors"
+
 )
 public class RaylibConfig implements InfoMapper {
 
