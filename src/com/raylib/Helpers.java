@@ -37,7 +37,7 @@ public final class Helpers {
     }
 
 
-    public Raylib.Rectangle newRectangle(float x, float y, float width, float height) {
+    public static Raylib.Rectangle newRectangle(float x, float y, float width, float height) {
         return new Raylib.Rectangle()
                 .x(x)
                 .y(y)
