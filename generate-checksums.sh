@@ -13,7 +13,7 @@ jar xf jaylib-natives-linux-armhf-*.jar
 rm jaylib-natives-linux-armhf-*.jar
 jar xf jaylib-natives-linux-arm64-*.jar
 rm jaylib-natives-linux-arm64-*.jar
-jar uf jaylib-5.5.0-0.jar com
+jar uf jaylib-5.5.0-1.jar com
 
 rm -rf com META-INF
 cp ~/IdeaProjects/jaylib/*.pom .
