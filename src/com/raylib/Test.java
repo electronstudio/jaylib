@@ -2,7 +2,7 @@ package com.raylib;
 
 import static com.raylib.Raylib.*;
 import static com.raylib.Colors.*;
-import static com.raylib.Helpers.*;
+
 
 public class Test {
     public static void main(String args[]) {
@@ -17,20 +17,20 @@ public class Test {
 //                                    .fovy(45)
 //                                    .projection(0);
 
-        Camera3D camera = newCamera(newVector3(18,16,18),
+        Camera3D camera = new Camera3D(new Vector3(18,16,18),
                 new Vector3(),
                 new Vector3().x(0).y(1).z(0),
                 45, 0);
 
-        Image image = LoadImage("examples/models/resources/heightmap.png");
-        Texture texture = LoadTextureFromImage(image);
-        Mesh mesh = GenMeshHeightmap(image, new Vector3().x(16).y(8).z(16));
-        Model model = LoadModelFromMesh(mesh);
+        Image image = new Image("heightmap.png");
+        TextureUnmanaged texture = new TextureUnmanaged(image);
+        Mesh mesh = new Mesh(GenMeshHeightmap(image, new Vector3().x(16).y(8).z(16)));
+        Model model = new Model(mesh);
         model.materials().maps().position(0).texture(texture);
         UnloadImage(image);
 
         while(!WindowShouldClose()){
-            UpdateCamera(camera, CAMERA_ORBITAL);
+            camera.Update(CAMERA_ORBITAL);
             BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode3D(camera);

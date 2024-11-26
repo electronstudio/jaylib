@@ -29,6 +29,6 @@ public final class Colors {
     public static final Raylib.Color RAYWHITE = c(245, 245, 245, 255);
 
     private static Raylib.Color c(int r, int g, int b, int a) {
-        return new Raylib.Color().r((byte) r).g((byte) g).b((byte) b).a((byte) a);
+        return new Raylib.Color(new Raylib.ColorStruct().r((byte) r).g((byte) g).b((byte) b).a((byte) a));
     }
 }
