@@ -2,11 +2,8 @@ name: Build
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -162,6 +159,54 @@ jobs:
       - name: Build jaylib
         env:
           RAYLIB_PLATFORM: windows-x86_64
+        run: |
+          build-windows.bat
+        shell: cmd
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v3.2.1
+        with:
+          name: jar
+          path: ./*.jar
+
+  build-windows32:
+    runs-on: windows-2019
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: '8'
+          architecture: 'x86'
+
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x86
+
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          msbuild raylib.sln /target:raylib /property:Configuration=Release /property:Platform=x86
+          copy raylib\Release\raylib.lib ..\..
+          cd ..\..
+        shell: cmd
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+      - name: Build jaylib
+        env:
+          RAYLIB_PLATFORM: windows-x86
         run: |
           build-windows.bat
         shell: cmd
