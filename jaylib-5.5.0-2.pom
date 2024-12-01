@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.co.electronstudio.jaylib</groupId>
+    <artifactId>jaylib</artifactId>
+    <version>5.5.0-2</version>
+    <packaging>jar</packaging>
+
+    <name>jaylib</name>
+    <description>JNI bindings for Raylib</description>
+    <url>https://github.com/electronstudio/jaylib/</url>
+
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE WITH THE CLASSPATH EXCEPTION</name>
+            <url>https://raw.githubusercontent.com/electronstudio/jaylib/master/REAL-LICENSE.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Richard Smith</name>
+            <email>sonatype@electronstudio.co.uk</email>
+            <organization>Electron Studio</organization>
+            <organizationUrl>http://www.electronstudio.co.uk</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/electronstudio/jaylib.git</connection>
+        <developerConnection>scm:git:ssh://github.com:electronstudio/jaylib,git</developerConnection>
+        <url>https://github.com/electronstudio/jaylib/tree/master/</url>
+    </scm>
+
+
+</project>

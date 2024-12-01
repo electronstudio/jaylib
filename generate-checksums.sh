@@ -9,11 +9,13 @@ jar xf jaylib-natives-linux-x86_64-*.jar
 rm jaylib-natives-linux-x86_64-*.jar
 jar xf jaylib-natives-windows-x86_64-*.jar
 rm jaylib-natives-windows-x86_64-*.jar
+jar xf jaylib-natives-windows-x86-*.jar
+rm jaylib-natives-windows-x86-*.jar
 jar xf jaylib-natives-linux-armhf-*.jar
 rm jaylib-natives-linux-armhf-*.jar
 jar xf jaylib-natives-linux-arm64-*.jar
 rm jaylib-natives-linux-arm64-*.jar
-jar uf jaylib-5.5.0-1.jar com
+jar uf jaylib-5.5.0-2.jar com
 
 rm -rf com META-INF
 cp ~/IdeaProjects/jaylib/*.pom .
