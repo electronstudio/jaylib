@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  RAYLIB_VERSION: 5.5.0-1
+  RAYLIB_VERSION: 5.5.0-2
 
 jobs:
   build-linux:

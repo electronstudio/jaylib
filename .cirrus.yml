@@ -6,7 +6,7 @@ mac_task:
     image: ghcr.io/cirruslabs/macos-sonoma-xcode:latest
   env:
     RAYLIB_PLATFORM: macosx-arm64
-    RAYLIB_VERSION: 5.5.0-1
+    RAYLIB_VERSION: 5.5.0-2
   setup_script:
     - brew update
     - brew install java11
@@ -31,7 +31,7 @@ pi_task:
     image: dtcooper/raspberrypi-os:python-bullseye
   env:
     RAYLIB_PLATFORM: linux-arm64
-    RAYLIB_VERSION: 5.0.0-0
+    RAYLIB_VERSION: 5.5.0-2
   setup_script:
     - apt update
     - apt -y install openjdk-11-jdk cmake libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
