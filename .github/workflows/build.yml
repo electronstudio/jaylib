@@ -52,6 +52,49 @@ jobs:
           name: jar
           path: ./*.jar
 
+
+  build-linux-x86:
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: '8'
+
+
+      - name: Build raylib
+        run: |
+          sudo apt update
+          sudo apt install gcc-multilib
+          sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DCMAKE_C_FLAGS="-m32" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          sudo make install
+          file /usr/local/lib/libraylib.a
+
+      - name: Build jaylib
+        env:
+          RAYLIB_PLATFORM: linux-x86
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+          ./build-docs.sh
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v3.2.1
+        with:
+          name: jar
+          path: ./*.jar
+
 #  build-linux-arm:
 #    runs-on: rpi
 #
