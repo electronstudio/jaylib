@@ -71,8 +71,10 @@ jobs:
       - name: Build raylib
         run: |
           sudo apt update
-          sudo apt install gcc-multilib
+          sudo dpkg --add-architecture i386
+          sudo apt install gcc-multilib g++-multilib
           sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
+          sudo apt-get install libx11-dev:i386
           cd raylib
           mkdir build
           cd build

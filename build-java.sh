@@ -14,7 +14,7 @@ mv src/com/raylib/RaylibConfig.class gen/com/raylib
 cp *.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java -Dplatform.compiler.foo='-DPHYSAC_IMPLEMENTATION -DRAYGUI_IMPLEMENTATION -std=c++11'
+java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java -Dplatform.compiler.foo='-DPHYSAC_IMPLEMENTATION -DRAYGUI_IMPLEMENTATION -O3 -std=c++11' -Dplatform.compiler.foo2='-march=i686 -m32'
 # /Oi /O2 /MD /LD /link /INCREMENTAL:NO /LTCG /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /NODEFAULTLIB:MSVCRTD'
 if [ $? -ne '0' ]; then
   echo "Fix this before trying again"
