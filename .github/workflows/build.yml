@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  RAYLIB_VERSION: 5.5.0-2
+  RAYLIB_VERSION: 5.5.0-3
 
 jobs:
   build-linux:
@@ -86,7 +86,7 @@ jobs:
 
 
   build-mac:
-    runs-on: macos-12
+    runs-on: macos-13
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.14
 
