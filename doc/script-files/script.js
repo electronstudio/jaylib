@@ -1,26 +1,8 @@
 /*
- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
  */
 
 var moduleSearchIndex;
@@ -35,6 +17,9 @@ var sortAsc = "sort-asc";
 var sortDesc = "sort-desc";
 var tableTab = "table-tab";
 var activeTableTab = "active-table-tab";
+
+const linkIcon = "Link icon";
+const linkToSection = "Link to this section";
 
 function loadScripts(doc, tag) {
     createElem(doc, tag, 'script-files/search.js');
@@ -112,20 +97,23 @@ function sortTable(header, columnIndex, columns) {
 
 // Toggles the visibility of a table category in all tables in a page
 function toggleGlobal(checkbox, selected, columns) {
-    var display = checkbox.checked ? '' : 'none';
-    document.querySelectorAll("div.table-tabs").forEach(function(t) {
-        var id = t.parentElement.getAttribute("id");
-        var selectedClass = id + "-tab" + selected;
-        // if selected is empty string it selects all uncategorized entries
-        var selectUncategorized = !Boolean(selected);
+    const display = checkbox.checked ? '' : 'none';
+    const selectOther = selected === "other";
+    const selectAll = selected === "all";
+    if (selectAll) {
+        document.querySelectorAll('.checkboxes input[type="checkbox"]').forEach(c => {
+            c.checked = checkbox.checked;
+        });
+    }
+    document.querySelectorAll("div.table-tabs").forEach(t => {
+        const id = t.parentElement.getAttribute("id");
+        const selectedClass = id + "-tab" + (selectOther ? "" : selected);
         var visible = 0;
-        document.querySelectorAll('div.' + id)
+        t.parentElement.querySelectorAll('div.' + id)
             .forEach(function(elem) {
-                if (selectUncategorized) {
-                    if (elem.className.indexOf(selectedClass) === -1) {
-                        elem.style.display = display;
-                    }
-                } else if (elem.classList.contains(selectedClass)) {
+                if (selectAll
+                    || (!selectOther && elem.classList.contains(selectedClass))
+                    || (selectOther && elem.className.indexOf(selectedClass) < 0)) {
                     elem.style.display = display;
                 }
                 if (elem.style.display === '') {
@@ -157,7 +145,7 @@ function show(tableId, selected, columns) {
 }
 
 function updateTabs(tableId, selected) {
-    document.querySelector('div#' + tableId +' .summary-table')
+    document.getElementById(tableId + '.tabpanel')
         .setAttribute('aria-labelledby', selected);
     document.querySelectorAll('button[id^="' + tableId + '"]')
         .forEach(function(tab, index) {
@@ -227,10 +215,253 @@ function switchCopyLabel(button, span) {
         }, 100);
     }, 1900);
 }
-// Dynamically set scroll margin to accomodate for draft header
+function setTopMargin() {
+    // Dynamically set scroll margin to accomodate for draft header
+    var headerHeight = Math.ceil(document.querySelector("header").offsetHeight);
+    document.querySelector(":root")
+        .style.setProperty("--nav-height", headerHeight + "px");
+}
+document.addEventListener("readystatechange", (e) => {
+    if (document.readyState === "interactive") {
+        setTopMargin();
+    }
+    if (sessionStorage.getItem("sidebar") === "hidden") {
+        const sidebar = document.querySelector(".main-grid nav.toc");
+        if (sidebar) sidebar.classList.add("hide-sidebar");
+    }
+});
 document.addEventListener("DOMContentLoaded", function(e) {
-    document.querySelectorAll(':not(input)[id]').forEach(
-        function(c) {
-            c.style["scroll-margin-top"] = Math.ceil(document.querySelector("header").offsetHeight) + "px"
+    setTopMargin();
+    // Make sure current element is visible in breadcrumb navigation on small displays
+    const subnav = document.querySelector("ol.sub-nav-list");
+    if (subnav && subnav.lastElementChild) {
+        subnav.lastElementChild.scrollIntoView({ behavior: "instant", inline: "start", block: "nearest" });
+    }
+    // Clone TOC sidebar to header for mobile navigation
+    const navbar = document.querySelector("div#navbar-top");
+    const sidebar = document.querySelector(".main-grid nav.toc");
+    const main = document.querySelector(".main-grid main");
+    const mainnav = navbar.querySelector("ul.nav-list");
+    const toggleButton = document.querySelector("button#navbar-toggle-button");
+    const toc = sidebar ? sidebar.cloneNode(true) : null;
+    if (toc) {
+        navbar.appendChild(toc);
+    }
+    document.querySelectorAll("input.filter-input").forEach(function(input) {
+        input.removeAttribute("disabled");
+        input.setAttribute("autocapitalize", "off");
+        input.value = "";
+        input.addEventListener("input", function(e) {
+            const pattern = input.value ? input.value.trim()
+                .replace(/[\[\]{}()*+?.\\^$|]/g, '\\$&')
+                .replace(/\s+/g, ".*") : "";
+            input.nextElementSibling.style.display = pattern ? "inline" : "none";
+            const filter = new RegExp(pattern, "i");
+            input.parentNode.parentNode.querySelectorAll("ol.toc-list li").forEach((li) => {
+                if (filter.test(li.innerText)) {
+                    li.removeAttribute("style");
+                } else {
+                    li.style.display = "none";
+                }
+            });
+            if (expanded) {
+                expand();
+            }
         });
+    });
+    document.querySelectorAll("input.reset-filter").forEach((button) => {
+        button.removeAttribute("disabled");
+        button.addEventListener("click", (e) => {
+            const input = button.previousElementSibling;
+            input.value = "";
+            input.dispatchEvent(new InputEvent("input"));
+            input.focus();
+            if (expanded) {
+                expand();
+            } else {
+                prevHash = null;
+                handleScroll();
+            }
+        })
+    });
+    var expanded = false;
+    var windowWidth;
+    function collapse() {
+        if (expanded) {
+            mainnav.removeAttribute("style");
+            if (toc) {
+                toc.removeAttribute("style");
+            }
+            toggleButton.classList.remove("expanded")
+            toggleButton.setAttribute("aria-expanded", "false");
+            expanded = false;
+        }
+    }
+    function expand() {
+        expanded = true;
+        mainnav.style.display = "block";
+        mainnav.style.removeProperty("height");
+        var maxHeight = window.innerHeight - subnav.offsetTop + 4;
+        var expandedHeight = Math.min(maxHeight, mainnav.scrollHeight + 10);
+        if (toc) {
+            toc.style.display = "flex";
+            expandedHeight = Math.min(maxHeight,
+                Math.max(expandedHeight, toc.querySelector("div.toc-header").offsetHeight
+                                       + toc.querySelector("ol.toc-list").scrollHeight + 10));
+            toc.style.height = expandedHeight + "px";
+        }
+        mainnav.style.height = expandedHeight + "px";
+        toggleButton.classList.add("expanded");
+        toggleButton.setAttribute("aria-expanded", "true");
+        windowWidth = window.innerWidth;
+    }
+    toggleButton.addEventListener("click", (e) => {
+        if (expanded) {
+            collapse();
+        } else {
+            expand();
+        }
+    });
+    if (toc) {
+        toc.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", collapse);
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") collapse();
+    });
+    document.querySelector("main").addEventListener("click", collapse);
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) searchInput.addEventListener("focus", collapse);
+    document.querySelectorAll("h1, h2, h3, h4, h5, h6")
+        .forEach((hdr, idx) => {
+            // Create anchor links for headers with an associated id attribute
+            var id = hdr.getAttribute("id") || hdr.parentElement.getAttribute("id")
+                || (hdr.querySelector("a") && hdr.querySelector("a").getAttribute("id"));
+            if (id) {
+                var template = document.createElement('template');
+                template.innerHTML =" <a href='#" + encodeURI(id) + "' class='anchor-link' aria-label='" + linkToSection
+                    + "'><img src='" + pathtoroot + "resource-files/link.svg' alt='" + linkIcon +"' tabindex='0'"
+                    + " width='16' height='16'></a>";
+                hdr.append(...template.content.childNodes);
+            }
+        });
+    var sections;
+    var scrollTimeout;
+    var scrollTimeoutNeeded;
+    var prevHash;
+    function initSectionData() {
+        sections = [{ id: "", top: 0 }].concat(Array.from(main.querySelectorAll("section[id], h2[id], h2 a[id], div[id]"))
+            .filter((e) => {
+                return sidebar.querySelector("a[href=\"#" + encodeURI(e.getAttribute("id")) + "\"]") !== null
+            }).map((e) => {
+                return {
+                    id: e.getAttribute("id"),
+                    top: e.offsetTop
+                };
+            }));
+    }
+    function setScrollTimeout() {
+        clearTimeout(scrollTimeout);
+        scrollTimeoutNeeded = false;
+        scrollTimeout = setTimeout(() => {
+            scrollTimeout = null;
+            handleScroll();
+        }, 100);
+    }
+    function handleScroll() {
+        if (!sidebar || !sidebar.offsetParent || sidebar.classList.contains("hide-sidebar")) {
+            return;
+        }
+        if (scrollTimeout || scrollTimeoutNeeded) {
+            setScrollTimeout();
+            return;
+        }
+        var scrollTop = document.documentElement.scrollTop;
+        var scrollHeight = document.documentElement.scrollHeight;
+        var currHash = null;
+        if (scrollHeight - scrollTop < window.innerHeight + 10) {
+            // Select last item if at bottom of the page
+            currHash = "#" + encodeURI(sections.at(-1).id);
+        } else {
+            for (var i = 0; i < sections.length; i++) {
+                var top = sections[i].top;
+                var bottom = sections[i + 1] ? sections[i + 1].top : scrollHeight;
+                if (top + ((bottom - top) / 2) > scrollTop || bottom > scrollTop + (window.innerHeight / 3)) {
+                    currHash = "#" + encodeURI(sections[i].id);
+                    break;
+                }
+            }
+        }
+        if (currHash !== prevHash) {
+            setSelected(currHash);
+        }
+    }
+    function setSelected(hash) {
+        var prev = sidebar.querySelector("a.current-selection");
+        if (prev)
+            prev.classList.remove("current-selection");
+        prevHash = hash;
+        if (hash) {
+            var curr = sidebar.querySelector("ol.toc-list a[href=\"" + hash + "\"]");
+            if (curr) {
+                curr.classList.add("current-selection");
+                curr.scrollIntoView({ behavior: "instant", block: "nearest" });
+            }
+        }
+    }
+    if (sidebar) {
+        initSectionData();
+        document.querySelectorAll("a[href^='#']").forEach((link) => {
+            link.addEventListener("click", (e) => {
+                scrollTimeoutNeeded = true;
+                setSelected(link.getAttribute("href"));
+            })
+        });
+        sidebar.querySelector("button.hide-sidebar").addEventListener("click", () => {
+            sidebar.classList.add("hide-sidebar");
+            sessionStorage.setItem("sidebar", "hidden");
+        });
+        sidebar.querySelector("button.show-sidebar").addEventListener("click", () => {
+            sidebar.classList.remove("hide-sidebar");
+            sessionStorage.removeItem("sidebar");
+            initSectionData();
+            handleScroll();
+        });
+        window.addEventListener("hashchange", (e) => {
+            scrollTimeoutNeeded = true;
+        });
+        if (document.location.hash) {
+            scrollTimeoutNeeded = true;
+            setSelected(document.location.hash);
+        } else {
+            handleScroll();
+        }
+        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scrollend", () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = null;
+                handleScroll();
+            }
+        })
+    }
+    // Resize handler
+    function handleResize(e) {
+        if (expanded) {
+            if (windowWidth !== window.innerWidth) {
+                collapse();
+            } else {
+                expand();
+            }
+        }
+        if (sections) {
+            initSectionData();
+            prevHash = null;
+            handleScroll();
+        }
+        setTopMargin();
+    }
+    window.addEventListener("orientationchange", handleResize);
+    window.addEventListener("resize", handleResize);
 });
