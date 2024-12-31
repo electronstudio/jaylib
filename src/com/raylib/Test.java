@@ -9,6 +9,8 @@ public class Test {
         InitWindow(800, 450, "Hello world");
         SetTargetFPS(60);
 
+        String s = LoadFileText("pom.xml");
+        System.out.println(s);
         System.out.println("RLGL TEST: "+rlGetVersion());
 
 //        Camera3D camera = new Camera3D()._position(new Vector3().x(18).y(16).z(18))

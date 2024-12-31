@@ -77,11 +77,9 @@ public class RaylibConfig implements InfoMapper {
                 .put(new Info("defined(RAYGUI_STANDALONE)").define(false))
                 .put(new Info("defined(RAYGUI_IMPLEMENTATION)").define(false))
                 .put(new Info("RAYGUIAPI").cppText("#define RAYGUIAPI"))
+                .put(new Info("LoadFileText").javaText("/** Better to use Java libraries for text */ @Deprecated public static native String LoadFileText(String fileName);"))
+                /* TODO There are many other text functions that may not work and ought to be either deprecated or removed */
                // .put(new Info("GLAD_REALLOC", "GLAD_FREE").cppTypes().annotations())
-
         ;
-
     }
-
-
 }
