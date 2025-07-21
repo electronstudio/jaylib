@@ -55,9 +55,9 @@ jobs:
           ./build-docs.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
+          name: jaylib-linux-x86_64
           path: ./*.jar
 
 #  build-linux-arm:
@@ -129,9 +129,9 @@ jobs:
           ./build-native.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
+          name: jaylib-macosx-x86_64
           path: ./*macosx-x86_64*.jar
 
   build-windows:
@@ -172,9 +172,9 @@ jobs:
         shell: cmd
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
+          name: jaylib-windows-x86_64
           path: ./*.jar
 
   build-windows32:
@@ -220,7 +220,7 @@ jobs:
         shell: cmd
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
+          name: jaylib-windows-x86
           path: ./*.jar
