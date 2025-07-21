@@ -29,9 +29,20 @@ jobs:
           apt install -y software-properties-common
           add-apt-repository ppa:git-core/ppa -y
           apt update
-          apt install -y wget curl git build-essential cmake ca-certificates
+          apt install -y wget curl git build-essential ca-certificates libssl-dev
           apt install -y libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
       
+      - name: Build and install CMake 3.31.6
+        run: |
+          cd /tmp
+          wget https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-3.31.6.tar.gz
+          tar -xzf cmake-3.31.6.tar.gz
+          cd cmake-3.31.6
+          ./bootstrap --prefix=/usr/local
+          make -j$(nproc)
+          make install
+          ln -sf /usr/local/bin/cmake /usr/bin/cmake
+          cmake --version
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: hack node
