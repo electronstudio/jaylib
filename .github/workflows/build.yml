@@ -13,7 +13,10 @@ env:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:16.04
+      options: --user root
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -21,22 +24,27 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
-        with:
-            distribution: 'adopt' # See 'Supported distributions' for available options
-            java-version: '8'
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y wget curl git build-essential cmake
+          apt install -y libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
 
+      - name: Setup Java 8
+        run: |
+          apt install -y openjdk-8-jdk
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $GITHUB_ENV
+          echo "/usr/lib/jvm/java-8-openjdk-amd64/bin" >> $GITHUB_PATH
 
       - name: Build raylib
         run: |
-          sudo apt update
-          sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
           cd raylib
           mkdir build
           cd build
           cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
-          sudo make install
+          make install
 
       - name: Build jaylib
         env:
