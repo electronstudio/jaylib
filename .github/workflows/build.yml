@@ -17,18 +17,35 @@ jobs:
     container:
       image: ubuntu:16.04
       options: --user root
+      volumes:
+        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
+        # see "Install node.js for GitHub Actions" below
+        - /tmp:/__e/node20
 
     steps:
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y software-properties-common
+          add-apt-repository ppa:git-core/ppa -y
+          apt update
+          apt install -y wget curl git build-essential cmake ca-certificates
+          apt install -y libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
+      
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: hack node
+        run: |
+            # Install a Node.js version that works in older Ubuntu containers (read: does not require very recent glibc)
+            NODE_VERSION=v20.18.1 &&
+            NODE_TAR_FILE=node-$NODE_VERSION-linux-x64-glibc-217.tar.gz &&
+            NODE_URL=https://unofficial-builds.nodejs.org/download/release/$NODE_VERSION/$NODE_TAR_FILE &&
+            curl -Lo /tmp/$NODE_TAR_FILE $NODE_URL &&
+            tar -C /__e/node20 -x --strip-components=1 -f /tmp/$NODE_TAR_FILE
       - uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - name: Install dependencies
-        run: |
-          apt update
-          apt install -y wget curl git build-essential cmake
-          apt install -y libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
 
       - name: Setup Java 8
         run: |
