@@ -54,6 +54,47 @@ jobs:
           name: jaylib-linux-x86_64
           path: ./*.jar
 
+  build-linux-32bit:
+    runs-on: ubuntu-latest
+    container:
+      image: electronstudio/ubuntu16-modern:i386
+      options: --user root
+      volumes:
+        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
+        - /tmp:/__e/node20
+
+    steps:
+      - name: fix node
+        run: |
+          ln -s /usr/local/bin /__e/node20/bin
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          make install
+
+      - name: Build jaylib
+        env:
+          RAYLIB_PLATFORM: linux-x86
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+          ./build-docs.sh
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-linux-x86
+          path: ./*.jar
+
 #  build-linux-arm:
 #    runs-on: rpi
 #
