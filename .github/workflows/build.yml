@@ -26,7 +26,6 @@ jobs:
       - name: fix node
         run: |
           ln -s /usr/local/bin /__e/node20/bin
-          ls -l /__e/node20
 
       - uses: actions/checkout@v2
         with:
@@ -130,7 +129,7 @@ jobs:
           path: ./*macosx-x86_64*.jar
 
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -173,7 +172,7 @@ jobs:
           path: ./*.jar
 
   build-windows32:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
