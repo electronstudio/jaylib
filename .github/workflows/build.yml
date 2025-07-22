@@ -15,55 +15,22 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:16.04
+      image: electronstudio/ubuntu16-modern:latest
       options: --user root
       volumes:
         # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
-        # see "Install node.js for GitHub Actions" below
         - /tmp:/__e/node20
 
-    steps:
-      - name: Install dependencies
-        run: |
-          apt update
-          apt install -y software-properties-common
-          add-apt-repository ppa:git-core/ppa -y
-          apt update
-          apt install -y wget curl git build-essential ca-certificates libssl-dev
-          apt install -y unzip libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
-      
-      - name: Build and install CMake 3.31.6
-        run: |
-          cd /tmp
-          wget https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-3.31.6.tar.gz
-          tar -xzf cmake-3.31.6.tar.gz
-          cd cmake-3.31.6
-          ./bootstrap --prefix=/usr/local
-          make -j$(nproc)
-          make install
-          ln -sf /usr/local/bin/cmake /usr/bin/cmake
-          cmake --version
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: hack node
+    steps:
+      - name: fix node
         run: |
-            # Install a Node.js version that works in older Ubuntu containers (read: does not require very recent glibc)
-            NODE_VERSION=v20.18.1 &&
-            NODE_TAR_FILE=node-$NODE_VERSION-linux-x64-glibc-217.tar.gz &&
-            NODE_URL=https://unofficial-builds.nodejs.org/download/release/$NODE_VERSION/$NODE_TAR_FILE &&
-            curl -Lo /tmp/$NODE_TAR_FILE $NODE_URL &&
-            tar -C /__e/node20 -x --strip-components=1 -f /tmp/$NODE_TAR_FILE
+          ln -s /usr/local/bin /__e/node20/bin
+          ls -l /__e/node20
+
       - uses: actions/checkout@v2
         with:
           submodules: recursive
-
-
-      - name: Setup Java 8
-        run: |
-          apt install -y openjdk-8-jdk
-          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-          echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $GITHUB_ENV
-          echo "/usr/lib/jvm/java-8-openjdk-amd64/bin" >> $GITHUB_PATH
 
       - name: Build raylib
         run: |
