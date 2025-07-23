@@ -77,7 +77,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DOPENGL_VERSION=2.1 -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           make install
 
