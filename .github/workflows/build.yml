@@ -271,13 +271,8 @@ jobs:
           path: artifacts
           merge-multiple: true
       
-      - name: Create merged artifact
-        run: |
-          cd artifacts
-          zip -r ../jaylib-all-platforms.zip .
-      
       - name: Upload merged artifact
         uses: actions/upload-artifact@v4
         with:
           name: jaylib-all-platforms
-          path: jaylib-all-platforms.zip
+          path: artifacts/
