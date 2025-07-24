@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jaylib-linux-x86_64
-          path: ./*.jar
+          path: ./jaylib*.jar
 
   build-linux-32bit:
     runs-on: ubuntu-latest
@@ -93,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jaylib-linux-x86
-          path: ./*.jar
+          path: ./jaylib-natives*.jar
 
 #  build-linux-arm:
 #    runs-on: rpi
@@ -210,7 +210,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jaylib-windows-x86_64
-          path: ./*.jar
+          path: ./jaylib-natives*.jar
 
   build-windows32:
     runs-on: windows-2022
@@ -258,4 +258,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jaylib-windows-x86
-          path: ./*.jar
+          path: ./jaylib-natives*.jar
