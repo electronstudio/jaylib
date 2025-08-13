@@ -13,30 +13,32 @@ env:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: electronstudio/ubuntu16-modern:latest
+      options: --user root
+      volumes:
+        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
+        - /tmp:/__e/node20
+
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: fix node
+        run: |
+          ln -s /usr/local/bin /__e/node20/bin
+
       - uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
-        with:
-            distribution: 'adopt' # See 'Supported distributions' for available options
-            java-version: '8'
-
-
       - name: Build raylib
         run: |
-          sudo apt update
-          sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev
           cd raylib
           mkdir build
           cd build
           cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
-          sudo make install
+          make install
 
       - name: Build jaylib
         env:
@@ -47,10 +49,51 @@ jobs:
           ./build-docs.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
-          path: ./*.jar
+          name: jaylib-linux-x86_64
+          path: ./jaylib*.jar
+
+  build-linux-32bit:
+    runs-on: ubuntu-latest
+    container:
+      image: electronstudio/ubuntu16-modern:i386
+      options: --user root
+      volumes:
+        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
+        - /tmp:/__e/node20
+
+    steps:
+      - name: fix node
+        run: |
+          ln -s /usr/local/bin /__e/node20/bin
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DOPENGL_VERSION=2.1 -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          make install
+
+      - name: Build jaylib
+        env:
+          RAYLIB_PLATFORM: linux-x86
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+          ./build-docs.sh
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-linux-x86
+          path: ./jaylib-natives*.jar
 
 #  build-linux-arm:
 #    runs-on: rpi
@@ -121,13 +164,13 @@ jobs:
           ./build-native.sh
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
+          name: jaylib-macosx-x86_64
           path: ./*macosx-x86_64*.jar
 
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -164,13 +207,13 @@ jobs:
         shell: cmd
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
-          path: ./*.jar
+          name: jaylib-windows-x86_64
+          path: ./jaylib-natives*.jar
 
   build-windows32:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -212,7 +255,24 @@ jobs:
         shell: cmd
 
       - name: Upload jar
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v4
         with:
-          name: jar
-          path: ./*.jar
+          name: jaylib-windows-x86
+          path: ./jaylib-natives*.jar
+
+  merge-artifacts:
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-linux-32bit, build-mac, build-windows, build-windows32]
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      
+      - name: Upload merged artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-all-platforms
+          path: artifacts/
