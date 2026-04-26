@@ -63,9 +63,9 @@ public class RaylibConfig implements InfoMapper {
                 .put(new Info("RLAPI").cppText("#define RLAPI"))
                 .put((new Info("raylib.h")
                         .linePatterns("// NOTE: Custom raylib color palette for amazing visuals on WHITE background",
-                                "// Structures Definition").skip()))
+                                "// Types and Structures Definition").skip()))
                 .put(new Info("MOUSE_LEFT_BUTTON","MOUSE_RIGHT_BUTTON","MOUSE_MIDDLE_BUTTON","FormatText",
-                        "SubText", "ShowWindow", "LoadText", "SpriteFont", "GetExtension", "GetMouseRay").cppTypes().annotations())
+                        "SubText", "ShowWindow", "LoadText", "SpriteFont", "GetExtension", "GetMouseRay", "GUI_POINTER_POSITION").cppTypes().annotations())
                 .put(new Info("defined(RLGL_STANDALONE)").define(false))
                 //.put(new Info("defined(GRAPHICS_API_OPENGL_ES2)").define(false))
                 .put(new Info("defined(GRAPHICS_API_OPENGL_11)").define(false))
