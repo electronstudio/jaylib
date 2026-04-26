@@ -153,7 +153,7 @@ jobs:
 
       - name: Build raylib with SDL if selected
         run: |
-          cd raylib-c
+          cd raylib
           mkdir build
           cd build
           cmake -DPLATFORM="SDL" -DOPENGL_VERSION="2.1" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
