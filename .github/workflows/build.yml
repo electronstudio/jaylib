@@ -186,10 +186,11 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v5
         with:
-          distribution: "adopt" # See 'Supported distributions' for available options
+          distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "8"
+          architecture: "x64"
 
       - name: Build SDL
         run: |
@@ -283,10 +284,11 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v5
         with:
-          distribution: "adopt" # See 'Supported distributions' for available options
+          distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "8"
+          architecture: "x64"
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
@@ -342,7 +344,7 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: "adopt" # See 'Supported distributions' for available options
+          distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "8"
           architecture: "x86"
 
@@ -351,12 +353,27 @@ jobs:
         with:
           msbuild-architecture: x86
 
+      - name: Download SDL3
+        run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
+
+      - name: Unpack SDL3
+        shell: bash
+        run: |
+          mkdir -p "${{ runner.temp }}/SDL3"
+          mkdir -p "${{ runner.temp }}/ziptmp"
+          unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
+          mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+          cp -v "${{ runner.temp }}/SDL3/lib/x86/"* .
+
+      - name: Set SDL3_DIR environment variable
+        run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
+
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -A Win32 -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DOPENGL_VERSION=2.1 -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DPLATFORM="SDL" -DOPENGL_VERSION="Software" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
