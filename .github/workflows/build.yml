@@ -94,6 +94,7 @@ jobs:
         run: |
           wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
           tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
           mkdir build
           cd build
           cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
@@ -109,7 +110,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="2.1" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="Software" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           make install
 
@@ -144,6 +145,7 @@ jobs:
         run: |
           wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
           tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
           mkdir build
           cd build
           cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_DYNAMIC_API=0 -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
@@ -189,13 +191,24 @@ jobs:
           distribution: "adopt" # See 'Supported distributions' for available options
           java-version: "8"
 
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_DYNAMIC_API=0 -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
+          cmake --build . --config Release
+          cmake --install .
+
       #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -229,12 +242,26 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
+      - name: Download SDL3
+        run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
+
+      - name: Unpack SDL3
+        shell: bash
+        run: |
+          mkdir -p "${{ runner.temp }}/SDL3"
+          mkdir -p "${{ runner.temp }}/ziptmp"
+          unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
+          mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+
+      - name: Set SDL3_DIR environment variable
+        run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
+
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
