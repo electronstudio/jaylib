@@ -301,7 +301,7 @@ jobs:
           mkdir -p "${{ runner.temp }}/ziptmp"
           unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
           mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
-          cp -v "${{ runner.temp }}/SDL3/lib/x86/"* .
+          cp -v "${{ runner.temp }}/SDL3/lib/x64/"* .
 
       - name: Set SDL3_DIR environment variable
         run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV

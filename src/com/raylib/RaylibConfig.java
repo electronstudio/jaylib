@@ -22,8 +22,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "user32",
                 "shell32",
                 "gdi32",
-                "raylib",
                 "SDL3",
+                "raylib",
             }
         ),
         @Platform(
@@ -34,8 +34,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "user32",
                 "shell32",
                 "gdi32",
-                "raylib",
                 "SDL3",
+                "raylib",
             }
         ),
         @Platform(value = { "macosx-x86_64" }, link = { "raylib" }),
