@@ -175,8 +175,8 @@ jobs:
           name: jaylib-linux-arm64
           path: ./jaylib-natives*.jar
 
-  build-mac:
-    runs-on: macos-13
+  build-mac-intel:
+    runs-on: macos-15-intel
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.14
 
@@ -224,6 +224,56 @@ jobs:
         with:
           name: jaylib-macosx-x86_64
           path: ./*macosx-x86_64*.jar
+
+  build-mac:
+    runs-on: macos-14
+    env:
+      MACOSX_DEPLOYMENT_TARGET: 10.14
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "adopt" # See 'Supported distributions' for available options
+          java-version: "8"
+
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_DYNAMIC_API=0 -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
+          cmake --build . --config Release
+          cmake --install .
+
+      #  build raylib for arm64 and x86_64 as well
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          sudo make install
+
+      - name: Build jaylib
+        env:
+          RAYLIB_PLATFORM: macosx-arm64
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-macosx-arm64
+          path: ./*macosx-arm64*.jar
 
   build-windows:
     runs-on: windows-2022
