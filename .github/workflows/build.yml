@@ -21,7 +21,6 @@ jobs:
         # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
         - /tmp:/__e/node20
 
-
     steps:
       - name: fix node
         run: |
@@ -37,6 +36,7 @@ jobs:
         run: |
           wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
           tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
           mkdir build
           cd build
           cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_DYNAMIC_API=0 -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
@@ -96,7 +96,7 @@ jobs:
           tar xvfz SDL3-3.4.4.tar.gz
           mkdir build
           cd build
-          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_DYNAMIC_API=0 -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF
           cmake --build . --config Release
           cmake --install .
 
@@ -150,7 +150,6 @@ jobs:
           cmake --build . --config Release
           sudo cmake --install .
 
-
       - name: Build raylib with SDL if selected
         run: |
           cd raylib
@@ -174,9 +173,6 @@ jobs:
           name: jaylib-linux-arm64
           path: ./jaylib-natives*.jar
 
-
-
-
   build-mac:
     runs-on: macos-13
     env:
@@ -190,9 +186,8 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
-
+          distribution: "adopt" # See 'Supported distributions' for available options
+          java-version: "8"
 
       #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
@@ -200,10 +195,9 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..   
+          cmake -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
-
 
       - name: Build jaylib
         env:
@@ -229,9 +223,8 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
-
+          distribution: "adopt" # See 'Supported distributions' for available options
+          java-version: "8"
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
@@ -272,10 +265,9 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
-          architecture: 'x86'
-
+          distribution: "adopt" # See 'Supported distributions' for available options
+          java-version: "8"
+          architecture: "x86"
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -311,15 +303,23 @@ jobs:
 
   merge-artifacts:
     runs-on: ubuntu-latest
-    needs: [build-linux, build-linux-32bit, build-linux-arm64, build-mac, build-windows, build-windows32]
-    
+    needs:
+      [
+        build-linux,
+        build-linux-32bit,
+        build-linux-arm64,
+        build-mac,
+        build-windows,
+        build-windows32,
+      ]
+
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
-      
+
       - name: Upload merged artifact
         uses: actions/upload-artifact@v4
         with:
