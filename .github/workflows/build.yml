@@ -208,7 +208,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -257,7 +257,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
@@ -301,6 +301,7 @@ jobs:
           mkdir -p "${{ runner.temp }}/ziptmp"
           unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
           mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+          cp "${{ runner.temp }}/SDL3/lib/x86/SDL3.lib" .
 
       - name: Set SDL3_DIR environment variable
         run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
