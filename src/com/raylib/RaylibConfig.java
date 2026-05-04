@@ -48,12 +48,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(
             value = { "linux-x86" },
             linkpath = { "/usr/lib/i386-linux-gnu", "/usr/local/lib" },
-            link = { "raylib", "SDL3", "X11" }
+            link = { "raylib", "sdfsdfsdfs", "X11" }
         ),
         @Platform(
             value = { "linux-arm64" },
             linkpath = { "/usr/lib/aarch64-linux-gnu/", "/usr/local/lib" },
-            link = { "raylib", "SDL3", "X11" }
+            link = { "raylib", "foboo", "X11" }
         ),
         @Platform(
             value = { "linux-armhf" },
