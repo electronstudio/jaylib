@@ -1,24 +1,26 @@
 #!/bin/bash
 
-rm javacpp.jar
-jar xf jaylib-natives-macosx-x86_64-*.jar
-rm jaylib-natives-macosx-x86_64-*.jar
-jar xf jaylib-natives-macosx-arm64-*.jar
-rm jaylib-natives-macosx-arm64-*.jar
-jar xf jaylib-natives-linux-x86_64-*.jar
-rm jaylib-natives-linux-x86_64-*.jar
-jar xf jaylib-natives-windows-x86_64-*.jar
-rm jaylib-natives-windows-x86_64-*.jar
-jar xf jaylib-natives-windows-x86-*.jar
-rm jaylib-natives-windows-x86-*.jar
-jar xf jaylib-natives-linux-armhf-*.jar
-rm jaylib-natives-linux-armhf-*.jar
-jar xf jaylib-natives-linux-arm64-*.jar
-rm jaylib-natives-linux-arm64-*.jar
-jar uf jaylib-6.0.0-0.jar com
+VERSION=6.0.0-0
+
+jar xf jaylib-natives-linux-arm64-${VERSION}.jar
+rm jaylib-natives-linux-arm64-${VERSION}.jar
+jar xf jaylib-natives-linux-x86-${VERSION}.jar
+rm jaylib-natives-linux-x86-${VERSION}.jar
+jar xf jaylib-natives-linux-x86_64-${VERSION}.jar
+rm jaylib-natives-linux-x86_64-${VERSION}.jar
+jar xf jaylib-natives-macosx-arm64-${VERSION}.jar
+rm jaylib-natives-macosx-arm64-${VERSION}.jar
+jar xf jaylib-natives-macosx-x86_64-${VERSION}.jar
+rm jaylib-natives-macosx-x86_64-${VERSION}.jar
+jar xf jaylib-natives-windows-x86-${VERSION}.jar
+rm jaylib-natives-windows-x86-${VERSION}.jar
+jar xf jaylib-natives-windows-x86_64-${VERSION}.jar
+rm jaylib-natives-windows-x86_64-${VERSION}.jar
+
+jar uf jaylib-${VERSION}.jar com
 
 rm -rf com META-INF
-cp ~/IdeaProjects/jaylib/*.pom .
+cp ~/IdeaProjects/jaylib/jaylib-${VERSION}.pom .
 
 for FILE in *.jar *.pom
 do
