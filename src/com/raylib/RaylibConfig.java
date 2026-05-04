@@ -11,8 +11,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(
             include = {
                 "raylib.h", "rlgl.h", "raymath.h", "physac.h", "raygui.h",
-            },
-            compiler = { "!default", "foo" }
+            }
         ),
         @Platform(
             value = { "windows-x86_64" },
@@ -24,7 +23,8 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "gdi32",
                 "SDL3",
                 "raylib",
-            }
+            },
+            compiler = { "!default", "foo" }
         ),
         @Platform(
             value = { "windows-x86" },
@@ -36,29 +36,42 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "gdi32",
                 "SDL3",
                 "raylib",
-            }
+            },
+            compiler = { "!default", "foo" }
         ),
-        @Platform(value = { "macosx-x86_64" }, link = { "raylib", "SDL3" }),
-        @Platform(value = { "macosx-arm64" }, link = { "raylib", "SDL3" }),
+        @Platform(
+            value = { "macosx-x86_64" },
+            link = { "raylib", "SDL3" },
+            compiler = { "!default", "mac" }
+        ),
+        @Platform(
+            value = { "macosx-arm64" },
+            link = { "raylib", "SDL3" },
+            compiler = { "!default", "mac" }
+        ),
         @Platform(
             value = { "linux-x86" },
             linkpath = { "/usr/lib/i386-linux-gnu" },
-            link = { "X11", "SDL3", "raylib" }
+            link = { "X11", "SDL3", "raylib" },
+            compiler = { "!default", "foo" }
         ),
         @Platform(
             value = { "linux-x86_64" },
             linkpath = { "/usr/lib/x86_64-linux-gnu" },
-            link = { "X11", "SDL3", "raylib" }
+            link = { "X11", "SDL3", "raylib" },
+            compiler = { "!default", "foo" }
         ),
         @Platform(
             value = { "linux-arm64" },
             linkpath = { "/usr/lib/aarch64-linux-gnu/" },
-            link = { "X11", "SDL3", "raylib" }
+            link = { "X11", "SDL3", "raylib" },
+            compiler = { "!default", "foo" }
         ),
         @Platform(
             value = { "linux-armhf" },
             linkpath = { "/usr/lib/arm-linux-gnueabihf/" },
-            link = { "X11", "SDL3", "raylib" }
+            link = { "X11", "SDL3", "raylib" },
+            compiler = { "!default", "foo" }
         ),
     },
     target = "com.raylib.Raylib"
