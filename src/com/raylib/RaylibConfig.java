@@ -42,7 +42,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(value = { "macosx-arm64" }, link = { "raylib", "SDL3" }),
         @Platform(
             value = { "linux-x86" },
-            linkpath = { "/usr/lib/i386-linux-gnu", "/usr/local/lib" },
+            linkpath = { "/usr/lib/i386-linux-gnu" },
             link = { "raylib", "SHOULDBELIN86", "X11" }
         ),
         @Platform(
@@ -52,13 +52,13 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         ),
         @Platform(
             value = { "linux-arm64" },
-            linkpath = { "/usr/lib/aarch64-linux-gnu/", "/usr/local/lib" },
-            link = { "raylib", "SHOULDBEARM64", "X11" }
+            linkpath = { "/usr/lib/aarch64-linux-gnu/" },
+            link = { "X11", "SDL3", "raylib" }
         ),
         @Platform(
             value = { "linux-armhf" },
             linkpath = { "/usr/lib/arm-linux-gnueabihf/", "/usr/local/lib" },
-            link = { "raylib", "SDL3", "X11" }
+            link = { "raylib", "FIXME", "X11" }
         ),
     },
     target = "com.raylib.Raylib"
