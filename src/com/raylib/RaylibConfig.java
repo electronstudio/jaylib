@@ -48,7 +48,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(
             value = { "linux-x86_64" },
             linkpath = { "/usr/lib/x86_64-linux-gnu" },
-            link = { "raylib", "SHOULDBELIN64", "X11" }
+            link = { "raylib", "X11" }
         ),
         @Platform(
             value = { "linux-arm64" },
