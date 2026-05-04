@@ -14,7 +14,7 @@ mv src/com/raylib/RaylibConfig.class gen/com/raylib
 cp *.h gen/com/raylib
 cd gen
 echo "STEP 2 - compile Raylib.java"
-java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java -Dplatform.compiler.foo='-DPHYSAC_IMPLEMENTATION -DRAYGUI_IMPLEMENTATION -std=c++11' -Dplatform.compiler.mac='MAC_BREAKS!'
+java -jar ../javacpp.jar  -nodelete com/raylib/Raylib.java -Dplatform.compiler.foo='-DPHYSAC_IMPLEMENTATION -DRAYGUI_IMPLEMENTATION -std=c++11' -Dplatform.compiler.mac='-DPHYSAC_IMPLEMENTATION -DRAYGUI_IMPLEMENTATION -std=c++11 -mmacosx-version-min=11.0'
 # /Oi /O2 /MD /LD /link /INCREMENTAL:NO /LTCG /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /NODEFAULTLIB:MSVCRTD'
 if [ $? -ne '0' ]; then
   echo "Fix this before trying again"
