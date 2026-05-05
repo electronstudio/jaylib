@@ -34,6 +34,7 @@ echo "STEP 5 - move compilation results from gen folder to natives folder"
 rmdir /S /Q natives
 mkdir natives\com\raylib\%RAYLIB_PLATFORM%
 copy gen\com\raylib\%RAYLIB_PLATFORM%\* natives\com\raylib\%RAYLIB_PLATFORM%\
+copy SDL3.dll natives\com\raylib\%RAYLIB_PLATFORM%\
 
 
 @REM echo "STEP 4 - unzip javacpp.jar"

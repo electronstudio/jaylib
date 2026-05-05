@@ -24,6 +24,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "SDL3",
                 "raylib",
             },
+            preload = { "SDL3" },
             compiler = { "!default", "foo" }
         ),
         @Platform(
@@ -37,6 +38,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                 "SDL3",
                 "raylib",
             },
+            preload = { "SDL3" },
             compiler = { "!default", "foo" }
         ),
         @Platform(
