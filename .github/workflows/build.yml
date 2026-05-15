@@ -378,8 +378,8 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          javac -cp "build;javacpp.jar;" -d build src/com/raylib/*.java
-          java -d64 -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test >/tmp/output 2>&1 || true
+          javac -cp "build;javacpp.jar" -d build src/com/raylib/*.java
+          java -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
@@ -436,7 +436,7 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -A Win32  -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DPLATFORM="Win32" -DOPENGL_VERSION="Software" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
@@ -453,7 +453,7 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          javac -cp "build;javacpp.jar;" -d build src/com/raylib/*.java
+          javac -cp "build;javacpp.jar" -d build src/com/raylib/*.java
           java -d32 -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
