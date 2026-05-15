@@ -97,7 +97,15 @@ public class RaylibConfig implements InfoMapper {
                 (new Info("raylib.h")
                         .linePatterns(
                             "// NOTE: Custom raylib color palette for amazing visuals on WHITE background",
-                            "// Types and Structures Definition"
+                            "// Vector2, 2 components"
+                        )
+                        .skip())
+            )
+            .put(
+                (new Info("rlgl.h")
+                        .linePatterns(
+                            "// Types and Structures Definition",
+                            "#endif"
                         )
                         .skip())
             )

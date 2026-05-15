@@ -26,12 +26,6 @@ jobs:
         run: |
           ln -s /usr/local/bin /__e/node20/bin
 
-      - name: update cmake
-        run: |
-          wget https://github.com/Kitware/CMake/releases/download/v3.31.10/cmake-3.31.10-linux-x86_64.tar.gz
-          tar xvfz cmake-3.31.10-linux-x86_64.tar.gz
-          cp -r cmake-3.31.10-linux-x86_64/* /usr/
-
       - name: Build SDL
         run: |
           wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
@@ -67,7 +61,7 @@ jobs:
       - name: Test
         run: |
 
-          ${{ matrix.python-version }} -c 'import pyray; pyray.init_window(100,100,"test")' >/tmp/output 2>&1 || true
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
