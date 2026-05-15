@@ -14,6 +14,8 @@ env:
 jobs:
   build-linux:
     runs-on: ubuntu-latest
+    env:
+      RAYLIB_PLATFORM: linux-x86_64
     container:
       image: electronstudio/ubuntu16-modern:latest
       options: --user root
@@ -51,8 +53,6 @@ jobs:
           make install
 
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: linux-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh
