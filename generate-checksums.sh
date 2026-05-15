@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=6.0.0-0
+VERSION=6.0.1-0
 
 jar xf jaylib-natives-linux-arm64-${VERSION}.jar
 rm jaylib-natives-linux-arm64-${VERSION}.jar
