@@ -30,13 +30,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         @Platform(
             value = { "windows-x86" },
             link = {
-                "winmm",
-                "OpenGL32",
-                "user32",
-                "shell32",
-                "gdi32",
-                "SDL3",
-                "raylib",
+                "winmm", "OpenGL32", "user32", "shell32", "gdi32", "raylib",
             },
             preload = { "SDL3" },
             compiler = { "!default", "foo" }

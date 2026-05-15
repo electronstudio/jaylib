@@ -416,20 +416,20 @@ jobs:
         with:
           msbuild-architecture: x86
 
-      - name: Download SDL3
-        run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
+      # - name: Download SDL3
+      #   run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
 
-      - name: Unpack SDL3
-        shell: bash
-        run: |
-          mkdir -p "${{ runner.temp }}/SDL3"
-          mkdir -p "${{ runner.temp }}/ziptmp"
-          unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
-          mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
-          cp -v "${{ runner.temp }}/SDL3/lib/x86/"* .
+      # - name: Unpack SDL3
+      #   shell: bash
+      #   run: |
+      #     mkdir -p "${{ runner.temp }}/SDL3"
+      #     mkdir -p "${{ runner.temp }}/ziptmp"
+      #     unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
+      #     mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+      #     cp -v "${{ runner.temp }}/SDL3/lib/x86/"* .
 
-      - name: Set SDL3_DIR environment variable
-        run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
+      # - name: Set SDL3_DIR environment variable
+      #   run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
 
       - name: Build raylib
         run: |
