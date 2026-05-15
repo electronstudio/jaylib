@@ -375,6 +375,9 @@ jobs:
           build-windows.bat
         shell: cmd
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Test
         shell: bash
         run: |
