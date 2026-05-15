@@ -43,13 +43,11 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         ),
         @Platform(
             value = { "macosx-x86_64" },
-            include = "@framework GameController",
             link = { "raylib", "SDL3", "GameController" },
             compiler = { "!default", "mac" }
         ),
         @Platform(
             value = { "macosx-arm64" },
-            include = "@framework GameController",
             link = { "raylib", "SDL3", "GameController" },
             compiler = { "!default", "mac" }
         ),

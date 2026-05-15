@@ -378,7 +378,8 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          java -d64 -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          ls *.jar
+          java -d64 -cp jaylib-${RAYLIB_VERSION}.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
@@ -396,7 +397,7 @@ jobs:
   build-windows32:
     runs-on: windows-2022
     env:
-      AYLIB_PLATFORM: windows-x86
+      RAYLIB_PLATFORM: windows-x86
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -452,7 +453,8 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          java -d32 -cp jaylib-$RAYLIB_VERSION.jar;jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          ls *.jar
+          java -d32 -cp jaylib-${RAYLIB_VERSION}.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
