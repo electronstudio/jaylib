@@ -374,6 +374,18 @@ jobs:
           build-windows.bat
         shell: cmd
 
+      - name: Test
+        shell: bash
+        run: |
+          java -d64 -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
+
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
@@ -439,19 +451,7 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          java -cp jaylib-$RAYLIB_VERSION.jar;jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
-          cat /tmp/output
-          if grep -q "INFO: Initializing raylib" /tmp/output; then
-            echo "Passed"
-          else
-            echo "Failed"
-            exit 1
-          fi
-
-      - name: Test
-        shell: bash
-        run: |
-          java -cp jaylib-$RAYLIB_VERSION.jar;jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          java -d32 -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
