@@ -454,14 +454,14 @@ jobs:
         shell: bash
         run: |
           javac -cp "build;javacpp.jar" -d build src/com/raylib/*.java
-          java -d32 -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test >/tmp/output 2>&1 || true
-          cat /tmp/output
-          if grep -q "INFO: Initializing raylib" /tmp/output; then
-            echo "Passed"
-          else
-            echo "Failed"
-            exit 1
-          fi
+          java -d32 -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test
+          # cat /tmp/output
+          # if grep -q "INFO: Initializing raylib" /tmp/output; then
+          #   echo "Passed"
+          # else
+          #   echo "Failed"
+          #   exit 1
+          # fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
