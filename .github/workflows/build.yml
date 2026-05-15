@@ -379,8 +379,8 @@ jobs:
         shell: bash
         run: |
           ls *.jar
-          javac -cp build src/com/raylib/*.java
-          java -d64 -cp build;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
+          javac -cp build;javacpp.jar src/com/raylib/*.java
+          java -d64 -cp build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
@@ -455,7 +455,8 @@ jobs:
         shell: bash
         run: |
           ls *.jar
-          java -d32 -cp jaylib-${RAYLIB_VERSION}.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
+          javac -cp build;javacpp.jar src/com/raylib/*.java
+          java -d32 -cp build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar com.raylib.Test >/tmp/output 2>&1 || true
           cat /tmp/output
           if grep -q "INFO: Initializing raylib" /tmp/output; then
             echo "Passed"
