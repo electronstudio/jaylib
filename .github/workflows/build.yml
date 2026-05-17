@@ -9,11 +9,13 @@ on:
   workflow_dispatch:
 
 env:
-  RAYLIB_VERSION: 5.5.0-3
+  RAYLIB_VERSION: 6.0.1-0
 
 jobs:
   build-linux:
     runs-on: ubuntu-latest
+    env:
+      RAYLIB_PLATFORM: linux-x86_64
     container:
       image: electronstudio/ubuntu16-modern:latest
       options: --user root
@@ -21,11 +23,21 @@ jobs:
         # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
         - /tmp:/__e/node20
 
-
     steps:
       - name: fix node
         run: |
           ln -s /usr/local/bin /__e/node20/bin
+
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF
+          cmake --build . --config Release
+          cmake --install .
 
       - uses: actions/checkout@v2
         with:
@@ -36,17 +48,26 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           make install
 
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: linux-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh
           ./build-docs.sh
+
+      - name: Test
+        run: |
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -56,6 +77,8 @@ jobs:
 
   build-linux-32bit:
     runs-on: ubuntu-latest
+    env:
+      RAYLIB_PLATFORM: linux-x86
     container:
       image: electronstudio/ubuntu16-modern:i386
       options: --user root
@@ -68,6 +91,23 @@ jobs:
         run: |
           ln -s /usr/local/bin /__e/node20/bin
 
+      - name: update cmake
+        run: |
+          wget https://github.com/Kitware/CMake/releases/download/v3.31.10/cmake-3.31.10-linux-x86_64.tar.gz
+          tar xvfz cmake-3.31.10-linux-x86_64.tar.gz
+          cp -r cmake-3.31.10-linux-x86_64/* /usr/
+
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF
+          cmake --build . --config Release
+          cmake --install .
+
       - uses: actions/checkout@v2
         with:
           submodules: recursive
@@ -77,17 +117,26 @@ jobs:
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DOPENGL_VERSION=2.1 -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="Software" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           make install
 
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: linux-x86
         run: |
           ./build-java.sh
           ./build-native.sh
           ./build-docs.sh
+
+      - name: Test
+        run: |
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -95,43 +144,69 @@ jobs:
           name: jaylib-linux-x86
           path: ./jaylib-natives*.jar
 
-#  build-linux-arm:
-#    runs-on: rpi
-#
-#    steps:
-#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#      - uses: actions/checkout@v2
-#        with:
-#          submodules: recursive
-#
-#
-#      - name: Build raylib
-#        run: |
-#          cd raylib
-#          mkdir build
-#          cd build
-#          cmake -DBUILD_EXAMPLES=off -DINCLUDE_EVERYTHING=on -DSUPPORT_FILEFORMAT_JPG=on -DWITH_PIC=on -DCMAKE_BUILD_TYPE=Release -DOpenGL_GL_PREFERENCE=GLVND ..
-#          make -j2
-#          make install
-#
-#      - name: Build jaylib
-#        env:
-#          RAYLIB_PLATFORM: linux-armhf
-#        run: |
-#          ./build-java.sh
-#          ./build-native.sh
-#
-#      - name: Upload jar
-#        uses: actions/upload-artifact@v2.2.4
-#        with:
-#          name: jar
-#          path: ./*.jar
+  build-linux-arm64:
+    runs-on: ubuntu-22.04-arm
+    env:
+      RAYLIB_PLATFORM: linux-arm64
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
+      - name: install libs
+        run: |
+          sudo apt update
+          sudo apt -y install cmake libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev libwayland-dev libxkbcommon-dev libgbm-dev libdrm-dev
 
-  build-mac:
-    runs-on: macos-13
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF
+          cmake --build . --config Release
+          sudo cmake --install .
+
+      - name: Build raylib with SDL if selected
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="2.1" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          sudo make install
+
+      - name: Build jaylib
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+          ./build-docs.sh
+
+      - name: Test
+        run: |
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-linux-arm64
+          path: ./jaylib-natives*.jar
+
+  build-mac-intel:
+    runs-on: macos-15-intel
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.14
+      RAYLIB_PLATFORM: macosx-x86_64
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -139,29 +214,47 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v5
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "8"
+          architecture: "x64"
 
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i '' 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF
+          cmake --build . --config Release
+          sudo cmake --install .
 
-      #  build raylib for arm64 and x86_64 as well
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           make -j2
           sudo make install
 
-
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: macosx-x86_64
         run: |
           ./build-java.sh
           ./build-native.sh
+
+      - name: Test
+        run: |
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -169,8 +262,11 @@ jobs:
           name: jaylib-macosx-x86_64
           path: ./*macosx-x86_64*.jar
 
-  build-windows:
-    runs-on: windows-2022
+  build-mac-arm64:
+    runs-on: macos-26
+    env:
+      MACOSX_DEPLOYMENT_TARGET: 11.0
+      RAYLIB_PLATFORM: macosx-arm64
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -178,21 +274,96 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v5
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "11"
+          architecture: "aarch64"
 
-
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Build SDL
+        run: |
+          wget https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-3.4.4.tar.gz
+          tar xvfz SDL3-3.4.4.tar.gz
+          sed -i '' 's/#define SDL_DYNAMIC_API 1/#define SDL_DYNAMIC_API 0/' SDL3-3.4.4/src/dynapi/SDL_dynapi.h
+          mkdir build
+          cd build
+          cmake ../SDL3-3.4.4 -DSDL_SHARED=OFF -DSDL_STATIC=ON -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release -DSDL_VULKAN=OFF -DSDL_CAMERA=OFF -DSDL_GPU=OFF -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_RENDER=OFF -DSDL_HAPTIC=OFF
+          cmake --build . --config Release
+          sudo cmake --install .
 
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF  -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          make -j2
+          sudo make install
+
+      - name: Build jaylib
+        run: |
+          ./build-java.sh
+          ./build-native.sh
+
+      - name: Test
+        run: |
+          ls *.jar
+          java -cp jaylib-$RAYLIB_VERSION.jar:jaylib-natives-$RAYLIB_PLATFORM-$RAYLIB_VERSION.jar com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: jaylib-macosx-arm64
+          path: ./*macosx-arm64*.jar
+
+  build-windows:
+    runs-on: windows-2022
+    env:
+      RAYLIB_PLATFORM: windows-x86_64
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "8"
+          architecture: "x64"
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Download SDL3
+        run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
+
+      - name: Unpack SDL3
+        shell: bash
+        run: |
+          mkdir -p "${{ runner.temp }}/SDL3"
+          mkdir -p "${{ runner.temp }}/ziptmp"
+          unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
+          mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+          cp -v "${{ runner.temp }}/SDL3/lib/x64/"* .
+
+      - name: Set SDL3_DIR environment variable
+        run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
+
+      - name: Build raylib
+        run: |
+          cd raylib
+          mkdir build
+          cd build
+          cmake -DPLATFORM="SDL" -DOPENGL_VERSION="3.3" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
@@ -200,11 +371,22 @@ jobs:
 
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: windows-x86_64
         run: |
           build-windows.bat
         shell: cmd
+
+      - name: Test
+        shell: bash
+        run: |
+          javac -cp "build;javacpp.jar" -d build src/com/raylib/*.java
+          java -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test >/tmp/output 2>&1 || true
+          cat /tmp/output
+          if grep -q "INFO: Initializing raylib" /tmp/output; then
+            echo "Passed"
+          else
+            echo "Failed"
+            exit 1
+          fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -214,6 +396,8 @@ jobs:
 
   build-windows32:
     runs-on: windows-2022
+    env:
+      RAYLIB_PLATFORM: windows-x86
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -223,22 +407,36 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '8'
-          architecture: 'x86'
-
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "8"
+          architecture: "x86"
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x86
 
+      # - name: Download SDL3
+      #   run: curl -L -o SDL3.zip https://github.com/libsdl-org/SDL/releases/download/release-3.4.4/SDL3-devel-3.4.4-VC.zip
+
+      # - name: Unpack SDL3
+      #   shell: bash
+      #   run: |
+      #     mkdir -p "${{ runner.temp }}/SDL3"
+      #     mkdir -p "${{ runner.temp }}/ziptmp"
+      #     unzip SDL3.zip -d "${{ runner.temp }}/ziptmp"
+      #     mv "${{ runner.temp }}/ziptmp"/*/* "${{ runner.temp }}/SDL3"
+      #     cp -v "${{ runner.temp }}/SDL3/lib/x86/"* .
+
+      # - name: Set SDL3_DIR environment variable
+      #   run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
+
       - name: Build raylib
         run: |
           cd raylib
           mkdir build
           cd build
-          cmake -A Win32 -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DOPENGL_VERSION=2.1 -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DPLATFORM="Win32" -DOPENGL_VERSION="Software" -DBUILD_EXAMPLES=OFF -DCUSTOMIZE_BUILD=ON -DSUPPORT_BUSY_WAIT_LOOP=OFF -DSUPPORT_CUSTOM_FRAME_CONTROL=OFF -DSUPPORT_FILEFORMAT_JPG=ON -DSUPPORT_FILEFORMAT_FLAC=ON -DWITH_PIC=ON -DCMAKE_BUILD_TYPE=Release ..
           msbuild raylib.sln /target:raylib /property:Configuration=Release
           copy raylib\Release\raylib.lib ..\..
           cd ..\..
@@ -248,11 +446,22 @@ jobs:
         with:
           arch: x86
       - name: Build jaylib
-        env:
-          RAYLIB_PLATFORM: windows-x86
         run: |
           build-windows.bat
         shell: cmd
+
+      - name: Test
+        shell: bash
+        run: |
+          javac -cp "build;javacpp.jar" -d build src/com/raylib/*.java
+          java -d32 -cp "build;javacpp.jar;jaylib-natives-${RAYLIB_PLATFORM}-${RAYLIB_VERSION}.jar" com.raylib.Test
+          # cat /tmp/output
+          # if grep -q "INFO: Initializing raylib" /tmp/output; then
+          #   echo "Passed"
+          # else
+          #   echo "Failed"
+          #   exit 1
+          # fi
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -262,15 +471,24 @@ jobs:
 
   merge-artifacts:
     runs-on: ubuntu-latest
-    needs: [build-linux, build-linux-32bit, build-mac, build-windows, build-windows32]
-    
+    needs:
+      [
+        build-linux,
+        build-linux-32bit,
+        build-linux-arm64,
+        build-mac-intel,
+        build-mac-arm64,
+        build-windows,
+        build-windows32,
+      ]
+
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
-      
+
       - name: Upload merged artifact
         uses: actions/upload-artifact@v4
         with:

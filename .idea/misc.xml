@@ -9,10 +9,11 @@
       <list>
         <option value="$PROJECT_DIR$/jaylib-4.2.0-1.pom" />
         <option value="$PROJECT_DIR$/jaylib-4.5.0-0.pom" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build" />
   </component>
 </project>
