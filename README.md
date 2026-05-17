@@ -27,13 +27,17 @@ they are auto-generated.  See [How To Build](#how-to-build)
 ## Platforms
 
 6.0+ release includes binaries for:
-* Windows x86_64 (SDL backend, OpenGL 3.3)
-* Windows x64 (Software rendering backend)
-* Macos x86_64 (SDL backend, Open 3.3)
-* Macos ARM64 (SDL backend, OpenGL 3.3)
-* Linux x86_64 (SDL backend, OpenGL 3.3)
-* Linux x86 (Software rendering backend)
-* Linux ARM64 (SDL backend, OpenGL 2.1)
+
+| OS                 | CPU | Backend | OpenGL version | Tested On |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Windows        | x86_64 | SDL | 3.3  | Windows 11 | 
+| Windows | x86 | Win32 | Software rendering | Windows 11 |
+| Macos | x86_64 | SDL | 3.3 | Macos 10.14 |
+| Macos | ARM64 | SDL | 3.3 | MacOS 26 |
+| Linux | x86_64 | SDL | 3.3 | Debian 13 |
+| Linux | x86 | SDL | Software rendering | Debian 13 |
+| Linux | ARM64 | SDL | 2.1 |? |
+
 
 ## Docs
 
@@ -58,7 +62,7 @@ Download [the Gradle example project](https://github.com/electronstudio/jaylib-e
 ```
 
 dependencies {
-    implementation 'uk.co.electronstudio.jaylib:jaylib:5.5.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib:6.0.+'
 }
 
 ```
@@ -71,7 +75,7 @@ dependencies {
         <dependency>
             <groupId>uk.co.electronstudio.jaylib</groupId>
             <artifactId>jaylib</artifactId>
-            <version>[5.5.0,5.6)</version>
+            <version>[6.0.0,6.1)</version>
         </dependency>
     </dependencies>
 
