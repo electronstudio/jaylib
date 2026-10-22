@@ -20,13 +20,13 @@ jobs:
       image: electronstudio/ubuntu16-modern:latest
       options: --user root
       volumes:
-        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
-        - /tmp:/__e/node20
+        # override /__e/node24 because GitHub Actions uses a version that requires too-recent glibc
+        - /tmp:/__e/node24
 
     steps:
       - name: fix node
         run: |
-          ln -s /usr/local/bin /__e/node20/bin
+          ln -s /usr/local/bin /__e/node24/bin
 
       - name: Build SDL
         run: |
@@ -83,13 +83,13 @@ jobs:
       image: electronstudio/ubuntu16-modern:i386
       options: --user root
       volumes:
-        # override /__e/node20 because GitHub Actions uses a version that requires too-recent glibc
-        - /tmp:/__e/node20
+        # override /__e/node24 because GitHub Actions uses a version that requires too-recent glibc
+        - /tmp:/__e/node24
 
     steps:
       - name: fix node
         run: |
-          ln -s /usr/local/bin /__e/node20/bin
+          ln -s /usr/local/bin /__e/node24/bin
 
       - name: update cmake
         run: |
@@ -265,7 +265,7 @@ jobs:
   build-mac-arm64:
     runs-on: macos-26
     env:
-      MACOSX_DEPLOYMENT_TARGET: 11.0
+      MACOSX_DEPLOYMENT_TARGET: 12.0
       RAYLIB_PLATFORM: macosx-arm64
 
     steps:
