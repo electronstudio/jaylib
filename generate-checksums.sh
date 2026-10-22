@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=6.0.1-0
+VERSION=6.2.0-0
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 jar xf jaylib-natives-linux-arm64-${VERSION}.jar
