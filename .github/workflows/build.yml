@@ -432,10 +432,6 @@ jobs:
       #   run: echo SDL3_DIR=${{ runner.temp }}\SDL3\cmake >> $env:GITHUB_ENV
 
       - name: Build raylib
-        env:
-          # rlsw.h (software renderer) needs a conformant preprocessor for its
-          # variadic macro tricks; MSVC's legacy one fails with C1012 on rlsw.h:5276
-          CL: /Zc:preprocessor
         run: |
           cd raylib
           mkdir build
