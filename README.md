@@ -9,7 +9,7 @@ autocompletion.  Use `com.raylib.Raylib` instead.  The Colors are now in `com.ra
 If you don't like the fluent constructor syntax of JavaCPP, use the methods in `com.raylib.Helpers`
 to create structs.
 
-# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 6.0 + RLGL + Raymath + Physac + RayGui
+# Jaylib - JNI bindings for [Raylib](https://github.com/raysan5/raylib/) 6.2 + RLGL + Raymath + Physac + RayGui
 
 JNI is the fastest kind of native binding for Java 8+, but is difficult to write.  Therefore
 we are using [JavaCPP](https://github.com/bytedeco/javacpp) to automatically generate the bindings.
@@ -62,7 +62,7 @@ Download [the Gradle example project](https://github.com/electronstudio/jaylib-e
 ```
 
 dependencies {
-    implementation 'uk.co.electronstudio.jaylib:jaylib:6.0.+'
+    implementation 'uk.co.electronstudio.jaylib:jaylib:6.2.+'
 }
 
 ```
@@ -75,7 +75,7 @@ dependencies {
         <dependency>
             <groupId>uk.co.electronstudio.jaylib</groupId>
             <artifactId>jaylib</artifactId>
-            <version>[6.0.0,6.1)</version>
+            <version>[6.2.0,6.3)</version>
         </dependency>
     </dependencies>
 
